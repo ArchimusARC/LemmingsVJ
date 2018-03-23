@@ -13,18 +13,18 @@
 
 enum LemmingAnims
 {
-	WALKING_LEFT, WALKING_RIGHT
+	WALKING_LEFT, WALKING_RIGHT, FALLING_RIGHT, FALLING_LEFT
 };
 
 
 void Lemming::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram)
 {
 	state = FALLING_RIGHT_STATE;
-	spritesheet.loadFromFile("images/lemming.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/lemming_v2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMinFilter(GL_NEAREST);
 	spritesheet.setMagFilter(GL_NEAREST);
-	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125, 0.5), &spritesheet, &shaderProgram);//  1/8, 1/2
-	sprite->setNumberAnimations(2);
+	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.125, 0.25), &spritesheet, &shaderProgram);//  1/8, 1/2
+	sprite->setNumberAnimations(4);
 	
 		sprite->setAnimationSpeed(WALKING_RIGHT, 12);
 		for(int i=0; i<8; i++)
@@ -32,9 +32,17 @@ void Lemming::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 		
 		sprite->setAnimationSpeed(WALKING_LEFT, 12);
 		for(int i=0; i<8; i++)
-			sprite->addKeyframe(WALKING_LEFT, glm::vec2(float(i) / 8, 0.5f));
+			sprite->addKeyframe(WALKING_LEFT, glm::vec2(float(i) / 8, 0.25f));
+
+		sprite->setAnimationSpeed(FALLING_RIGHT, 12);
+		for (int i = 0; i<8; i++)
+			sprite->addKeyframe(FALLING_RIGHT, glm::vec2(float(i) / 8, 0.50f));
+
+		sprite->setAnimationSpeed(FALLING_LEFT, 12);
+		for (int i = 0; i<8; i++)
+			sprite->addKeyframe(FALLING_LEFT, glm::vec2(float(i) / 8, 0.75f));
 		
-	sprite->changeAnimation(WALKING_RIGHT);
+	sprite->changeAnimation(FALLING_RIGHT);
 	sprite->setPosition(initialPosition);
 }
 
@@ -54,6 +62,7 @@ void Lemming::update(int deltaTime)
 			fallDistance += fall;
 		}
 		else{
+			sprite->changeAnimation(WALKING_LEFT);
 			state = WALKING_LEFT_STATE;
 			if (fallDistance + fall > 50) state = DEAD;
 		}
@@ -65,6 +74,7 @@ void Lemming::update(int deltaTime)
 			fallDistance += fall;
 		}
 		else{
+			sprite->changeAnimation(WALKING_RIGHT);
 			state = WALKING_RIGHT_STATE;
 			if (fallDistance + fall > 50) state = DEAD;
 		}
@@ -85,6 +95,7 @@ void Lemming::update(int deltaTime)
 			if(fall > 1)
 				sprite->position() += glm::vec2(0, 1);
 			if (fall > 2){
+				sprite->changeAnimation(FALLING_LEFT);
 				state = FALLING_LEFT_STATE;
 				fallDistance = fall;
 			}
@@ -104,6 +115,7 @@ void Lemming::update(int deltaTime)
 			if(fall < 3)
 				sprite->position() += glm::vec2(0, fall);
 			else{
+				sprite->changeAnimation(FALLING_RIGHT);
 				state = FALLING_RIGHT_STATE;
 				fallDistance = fall;
 			}
