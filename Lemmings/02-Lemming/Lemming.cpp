@@ -64,7 +64,10 @@ void Lemming::update(int deltaTime)
 		else{
 			sprite->changeAnimation(WALKING_LEFT);
 			state = WALKING_LEFT_STATE;
-			if (fallDistance + fall > 50) state = DEAD;
+			if (fallDistance + fall > 50) {
+				state = DEAD;
+				sprite->setPosition(glm::vec2(0, 170));
+			}
 		}
 		break;
 	case FALLING_RIGHT_STATE:
@@ -76,7 +79,10 @@ void Lemming::update(int deltaTime)
 		else{
 			sprite->changeAnimation(WALKING_RIGHT);
 			state = WALKING_RIGHT_STATE;
-			if (fallDistance + fall > 50) state = DEAD;
+			if (fallDistance + fall > 50) {
+				state = DEAD;
+				sprite->setPosition(glm::vec2(0, 170));
+			}
 		}
 		break;
 	case WALKING_LEFT_STATE:

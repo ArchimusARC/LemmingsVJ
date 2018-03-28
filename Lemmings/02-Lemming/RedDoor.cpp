@@ -22,7 +22,7 @@ void RedDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 	for (int i = 0; i<10; i++)
 		sprite->addKeyframe(OPEN_DOOR, glm::vec2(float(i) / 10, 0.0f));
 
-	opener = -1;
+	opener = 0;
 	sprite->changeAnimation(OPEN_DOOR);
 	sprite->setPosition(initialPosition);
 }
@@ -44,9 +44,8 @@ void RedDoor::setMapMask(VariableTexture *mapMask)
 }
 
 bool RedDoor::opened() {
-	if (opener > 10) 
-		++opener;
-	return (opener < 10);
+	if (opener < 25) ++opener;
+	return (opener < 25);
 }
 
 
