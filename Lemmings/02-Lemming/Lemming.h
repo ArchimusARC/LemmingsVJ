@@ -21,17 +21,27 @@ public:
 	void setMapMask(VariableTexture *mapMask);
 	
 private:
+	float LemmingAnimations = 8.0f;//Modificar cada cop que s'afegeixi una animació
 	int fallDistance;
 	int collisionFloor(int maxFall);
 	bool collision();
+	bool continue_bashing(int right);
+	void setAnimations(ShaderProgram &shaderProgram);
 	
 private:
 	enum LemmingState
 	{
-		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_LEFT_STATE, FALLING_RIGHT_STATE, DEAD
+		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_LEFT_STATE, FALLING_RIGHT_STATE, DEAD, 
+		DIGGING, BLOCKING, BASHING_LEFT, BASHING_RIGHT, CLIMBING_LEFT, CLIMBING_RIGHT, BUILDING_LEFT, 
+		BUILDING_RIGHT, FLOATING_LEFT, FLOATING_RIGHT
+	};
+	enum AltState //estats seguents que no podem controlar amb la maquina d'estats
+	{
+		NONE, DIGGER, CLIMBER, BASHER, PARACHUTE, BLOCKER, BUILDER
 	};
 
 	LemmingState state;
+	AltState given;
 	Texture spritesheet;
 	Sprite *sprite;
 	VariableTexture *mask;

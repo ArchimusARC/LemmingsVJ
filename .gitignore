@@ -1,0 +1,3 @@
+# Gitignore #
+Lemmings/02-Lemming/.vs/02-Lemming/v15/*
+Lemmings/02-Lemming/Debug/*
