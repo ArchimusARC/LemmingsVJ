@@ -2,22 +2,18 @@
 #include <GL/glut.h>
 #include "Game.h"
 
-#define TIME_PER_FRAME 1000.f / 30.f // Approx. 30 fps
-
 
 void Game::init()
 {
 	bPlay = true;
 	bLeftMouse = bRightMouse = false;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	frameCounter = 0;
-	scene.init(frameCounter);
+	scene.init();
 }
 
-bool Game::update(int deltaTime,int elapsedTime)
-{	
-	frameCounter = elapsedTime / TIME_PER_FRAME;
-	scene.update(deltaTime,frameCounter);
+bool Game::update(int deltaTime)
+{
+	scene.update(deltaTime);
 	
 	return bPlay;
 }
@@ -25,9 +21,7 @@ bool Game::update(int deltaTime,int elapsedTime)
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	++frameCounter;
 	scene.render();
-	
 }
 
 void Game::keyPressed(int key)

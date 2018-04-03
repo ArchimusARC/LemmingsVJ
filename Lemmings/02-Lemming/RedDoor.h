@@ -14,12 +14,12 @@ class RedDoor
 {
 
 public:
-	void init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram, int firstFrame);
+	void init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
 
 	void setMapMask(VariableTexture *mapMask);
-	bool opened(int currentFrame);
+	bool opened();
 
 private:
 
@@ -27,7 +27,6 @@ private:
 	Sprite *sprite;
 	VariableTexture *mask;
 	int opener;
-	int firstFrame;
 };
 
 

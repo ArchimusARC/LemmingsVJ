@@ -76,7 +76,7 @@ void Lemming::update(int deltaTime)
 			if (fallDistance + fall > 50 && given != PARACHUTE) {
 				state = DEAD;
 			}
-			else given = BASHER;
+			else given = NONE;
 		}
 		break;
 	case WALKING_LEFT_STATE:
