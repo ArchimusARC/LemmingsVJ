@@ -23,7 +23,7 @@ public:
 	}
 	
 	void init();
-	bool update(int deltaTime);
+	bool update(int deltaTime, int elapsedTime);
 	void render();
 	
 	// Input callback methods
@@ -45,6 +45,7 @@ private:
 	                                  // we can have access at any time
 	int mouseX, mouseY;               // Mouse position
 	bool bLeftMouse, bRightMouse;     // Mouse button states
+	int frameCounter;
 
 };
 

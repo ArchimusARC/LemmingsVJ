@@ -10,7 +10,7 @@ enum RedDoorAnims
 	OPEN_DOOR
 };
 
-void RedDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram)
+void RedDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram, int firstFrame)
 {
 	spritesheet.loadFromFile("images/red_door.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMinFilter(GL_NEAREST);
@@ -23,6 +23,7 @@ void RedDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 		sprite->addKeyframe(OPEN_DOOR, glm::vec2(float(i) / 10, 0.0f));
 
 	opener = 0;
+	this->firstFrame = firstFrame;
 	sprite->changeAnimation(OPEN_DOOR);
 	sprite->setPosition(initialPosition);
 }
@@ -43,9 +44,9 @@ void RedDoor::setMapMask(VariableTexture *mapMask)
 	mask = mapMask;
 }
 
-bool RedDoor::opened() {
-	if (opener < 25) ++opener;
-	return (opener < 25);
+bool RedDoor::opened(int currentFrame) {
+	return (currentFrame-firstFrame < 10);
+	
 }
 
 

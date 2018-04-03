@@ -12,6 +12,9 @@
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
 
+#define TIME_PER_FRAME 1000.f / 30.f // Approx. 30 fps
+
+
 
 class Scene
 {
@@ -20,8 +23,8 @@ public:
 	Scene();
 	~Scene();
 
-	void init();
-	void update(int deltaTime);
+	void init(int firstFrame);
+	void update(int deltaTime, int frameCount);
 	void render();
 	
 	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
@@ -40,6 +43,7 @@ private:
 	glm::mat4 projection;
 	Lemming lemmings[4];
 	RedDoor red_door;
+	int actualFrame;
 
 };
 
