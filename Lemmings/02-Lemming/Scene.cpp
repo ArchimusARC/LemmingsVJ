@@ -42,6 +42,7 @@ void Scene::init()
 		lemmings[i].setMapMask(&maskTexture);
 	}
 	red_door.init(glm::vec2(65, 10), simpleTexProgram);
+	goal.init(glm::vec2(120,40), simpleTexProgram);
 }
 
 unsigned int x = 0;
@@ -53,6 +54,7 @@ void Scene::update(int deltaTime)
 		lemmings[i].update(deltaTime);
 	}
 	if(red_door.opened())red_door.update(deltaTime);
+	goal.update(deltaTime);
 }
 
 void Scene::render()
@@ -78,6 +80,7 @@ void Scene::render()
 		lemmings[i].render();
 	}
 	red_door.render();
+	goal.render();
 }
 
 void Scene::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)

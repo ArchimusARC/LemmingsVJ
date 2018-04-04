@@ -7,7 +7,7 @@
 #include "MaskedTexturedQuad.h"
 #include "Lemming.h"
 #include "RedDoor.h"
-
+#include "EndDoor.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -40,6 +40,7 @@ private:
 	glm::mat4 projection;
 	Lemming lemmings[4];
 	RedDoor red_door;
+	EndDoor goal;
 
 };
 
