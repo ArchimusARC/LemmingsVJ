@@ -16,7 +16,7 @@ void main()
 		discard;
 	}
 	else {
-		if(maskColor.r < 0.1f)
+		if(maskColor.r < 0.1f || (maskColor.r < 0.79 && maskColor.r > 0.77))
 		discard;
 	}
 	outColor = color * texColor;

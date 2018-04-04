@@ -69,8 +69,6 @@ void Scene::render()
 	map->render(maskedTexProgram, colorTexturePintar, maskTexture);
 	maskedTexProgram.setUniform1i("fons", 0);
 	map->render(maskedTexProgram, colorTexture, maskTexture);
-
-
 	simpleTexProgram.use();
 	simpleTexProgram.setUniformMatrix4f("projection", projection);
 	simpleTexProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);

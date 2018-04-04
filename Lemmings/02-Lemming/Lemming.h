@@ -25,7 +25,10 @@ private:
 	int fallDistance;
 	int collisionFloor(int maxFall);
 	bool collision();
-	bool continue_bashing(int right);
+	bool continue_bashing();
+	bool notColliding();
+	bool notABlocker();
+	bool stairCollision();
 	void setAnimations(ShaderProgram &shaderProgram);
 	
 private:

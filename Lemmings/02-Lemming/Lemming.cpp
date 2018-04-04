@@ -33,10 +33,15 @@ void Lemming::update(int deltaTime)
 
 	if(sprite->update(deltaTime) == 0)
 		return;
-	if (given == BLOCKER && (state != FALLING_LEFT_STATE || state != FALLING_RIGHT_STATE)) state = BLOCKING;
+	if (given == BLOCKER && (state != FALLING_LEFT_STATE || state != FALLING_RIGHT_STATE)) {
+		state = BLOCKING;
+		sprite->changeAnimation(BLOCKING);
+	}
 	else if (given == DIGGER && (state == WALKING_LEFT_STATE  || state == WALKING_RIGHT_STATE)) state = DIGGING;
+	else if (given == BUILDER && state == WALKING_LEFT_STATE) state = BUILDING_LEFT;
+	else if (given == BUILDER && state == WALKING_RIGHT_STATE) state = BUILDING_RIGHT;
 	bool col;
-	glm::ivec2 pollasentuboca;
+	glm::ivec2 actualPos;
 	switch (state)
 	{
 	case FALLING_LEFT_STATE:
@@ -45,8 +50,8 @@ void Lemming::update(int deltaTime)
 			sprite->position() += glm::vec2(0, fall);
 			fallDistance += fall;
 			if (given == PARACHUTE) sprite->changeAnimation(FLOATING_LEFT);
-			pollasentuboca = sprite->position();
-			if (pollasentuboca.y + fall >= 170) {
+			actualPos = sprite->position();
+			if (actualPos.y + fall >= 170) {
 				state = DEAD;
 			}
 		}
@@ -65,8 +70,8 @@ void Lemming::update(int deltaTime)
 			sprite->position() += glm::vec2(0, fall);
 			fallDistance += fall;
 			if (given == PARACHUTE) sprite->changeAnimation(FLOATING_RIGHT);
-			pollasentuboca = sprite->position();
-			if (pollasentuboca.y + fall >= 170) {
+			actualPos = sprite->position();
+			if (actualPos.y + fall >= 170) {
 				state = DEAD;
 			}
 		}
@@ -147,13 +152,16 @@ void Lemming::update(int deltaTime)
 		sprite->setPosition(glm::vec2(32,170));
 		break;
 	case DIGGING:
-		pollasentuboca = sprite->position() + glm::vec2(360, 0);//position + map displacement
-		pollasentuboca += glm::ivec2(7, 15);//sprite displacement
-		for (int i = 0; i < 5; ++i) {
-			mask->setPixel(pollasentuboca.x + i - 2, pollasentuboca.y + 1, 0);
+		actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+		actualPos += glm::ivec2(7, 15);//sprite displacement
+		col = notABlocker();
+		if (col) {
+			for (int i = 0; i < 5; ++i) {
+				mask->setPixel(actualPos.x + i - 2, actualPos.y + 1, 0);
+			}
 		}
 		fall = collisionFloor(3);
-		if (fall < 3)
+		if (fall < 3 && !col)
 			sprite->position() += glm::vec2(0, fall);
 		else {
 			sprite->changeAnimation(FALLING_RIGHT);
@@ -163,18 +171,27 @@ void Lemming::update(int deltaTime)
 		}
 		break;
 	case CLIMBING_LEFT:
-		sprite->position() += glm::vec2(0, -1);
-
+		if (notColliding()) {
+			sprite->position() += glm::vec2(0, -1);
+			actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+			actualPos += glm::ivec2(7, 15);//sprite displacement
+			if (mask->pixel(actualPos.x - 1, actualPos.y) == 0) state = WALKING_LEFT_STATE;
+		}
 		break;
 	case CLIMBING_RIGHT:
-
+		if (notColliding()) {
+			sprite->position() += glm::vec2(0, -1);
+			actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+			actualPos += glm::ivec2(7, 15);//sprite displacement
+			if (mask->pixel(actualPos.x + 2, actualPos.y) == 0) state = WALKING_RIGHT_STATE;
+		}
 		break;
 	case BASHING_LEFT:
-		if (continue_bashing(0)) {
-			pollasentuboca = sprite->position() + glm::vec2(360, 0);//position + map displacement
-			pollasentuboca += glm::ivec2(7, 15);//sprite displacement
+		if (continue_bashing() && notABlocker()) {
+			actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+			actualPos += glm::ivec2(7, 15);//sprite displacement
 			for (int i = 0; i < 10; ++i) {
-				mask->setPixel(pollasentuboca.x - 1, pollasentuboca.y - i, 0);
+				mask->setPixel(actualPos.x - 1, actualPos.y - i, 0);
 			}
 		}
 		else {
@@ -193,11 +210,11 @@ void Lemming::update(int deltaTime)
 		}
 		break;
 	case BASHING_RIGHT:
-		if (continue_bashing(1)) {
-			pollasentuboca = sprite->position() + glm::vec2(360, 0);//position + map displacement
-			pollasentuboca += glm::ivec2(7, 15);//sprite displacement
+		if (continue_bashing() && notABlocker()) {
+			actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+			actualPos += glm::ivec2(7, 15);//sprite displacement
 			for (int i = 0; i < 10; ++i) {
-				mask->setPixel(pollasentuboca.x + 2, pollasentuboca.y - i, 0);
+				mask->setPixel(actualPos.x + 2, actualPos.y - i, 0);
 			}
 		}
 		else {
@@ -216,13 +233,46 @@ void Lemming::update(int deltaTime)
 		}
 		break;
 	case BLOCKING:
-
+		actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+		actualPos += glm::ivec2(7, 15);//sprite displacement
+		for (int i = -4; i < 6; ++i) {
+			mask->setPixel(actualPos.x + i, actualPos.y, 200);
+			mask->setPixel(actualPos.x + i, actualPos.y-9, 200);
+		}
+		for (int i = 0; i < 10; ++i) {
+			mask->setPixel(actualPos.x -4, actualPos.y - i, 200);
+			mask->setPixel(actualPos.x +6, actualPos.y - i, 200);
+		}
 		break;
 	case BUILDING_LEFT:
-
+		actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+		actualPos += glm::ivec2(7, 15);//sprite displacement
+		if (!stairCollision()) {
+			for (int i = 1; i < 7; ++i) {
+				mask->setPixel(actualPos.x - i, actualPos.y, 255);
+			}
+			sprite->position() += glm::vec2(-2, -1);
+		}
+		else {
+			sprite->changeAnimation(WALKING_LEFT);
+			state = WALKING_LEFT_STATE;
+			given = NONE;
+		}
 		break;
 	case BUILDING_RIGHT:
-
+		actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+		actualPos += glm::ivec2(7, 15);//sprite displacement
+		if (!stairCollision()) {
+			for (int i = 2; i < 8; ++i) {
+				mask->setPixel(actualPos.x + i, actualPos.y, 255);
+			}
+			sprite->position() += glm::vec2(2, -1);
+		}
+		else {
+			sprite->changeAnimation(WALKING_RIGHT);
+			state = WALKING_RIGHT_STATE;
+			given = NONE;
+		}
 		break;
 	}
 }
@@ -246,7 +296,7 @@ int Lemming::collisionFloor(int maxFall)
 	posBase += glm::ivec2(7, 16);
 	while((fall < maxFall) && !bContact)
 	{
-		if((mask->pixel(posBase.x, posBase.y+fall) == 0) && (mask->pixel(posBase.x+1, posBase.y+fall) == 0))
+		if((mask->pixel(posBase.x, posBase.y+fall) ==0) && (mask->pixel(posBase.x+1, posBase.y+fall) ==0))
 			fall += 1;
 		else
 			bContact = true;
@@ -266,15 +316,58 @@ bool Lemming::collision()
 	return true;
 }
 
-bool Lemming::continue_bashing(int right) {
+bool Lemming::continue_bashing() {
 	glm::ivec2 posBase = sprite->position() + glm::vec2(360, 0); // Add the map displacement
-
 	posBase += glm::ivec2(7, 15);
+	bool right = state == BASHING_RIGHT;
 	for (int i = 0; i < 10; ++i) {
-		if (mask->pixel(posBase.x -1 + 4 * right, posBase.y + i) == 0)
+		if (mask->pixel(posBase.x -1 + 3 * right, posBase.y - i) == 0)
 			return true;
 	}
 	return false;
+}
+
+bool Lemming::notColliding() {
+	glm::ivec2 posCap = sprite->position() + glm::vec2(360, 0); // Add the map displacement
+	posCap += glm::ivec2(7, 5);
+	if (mask->pixel(posCap.x, posCap.y) < 51 && mask->pixel(posCap.x + 1, posCap.y) == 0)return true;
+	else return false;
+}
+
+bool Lemming::notABlocker() {
+	glm::ivec2 actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+	actualPos += glm::ivec2(7, 15);//sprite displacement
+	if (state == DIGGING) {
+		for (int i = 0; i < 5; ++i) {
+			if (mask->pixel(actualPos.x + i - 2, actualPos.y + 1) == 200) return false;
+		}
+		return true;
+	}
+	else {
+		bool right = state == BASHING_RIGHT;
+		for (int i = 0; i < 10; ++i) {
+			if (mask->pixel(actualPos.x - 1 + 3 * right, actualPos.y - i) == 200)
+				return false;
+		}
+		return true;
+	}
+}
+
+bool Lemming::stairCollision() {
+	glm::ivec2 actualPos = sprite->position() + glm::vec2(360, 0);//position + map displacement
+	actualPos += glm::ivec2(7, 15);//sprite displacement
+	if (state == BUILDING_RIGHT) {
+		for (int i = 2; i <4; ++i) {
+			if (mask->pixel(actualPos.x + i, actualPos.y - 1) == 255 || mask->pixel(actualPos.x + i, actualPos.y - 2) == 255) return true;
+		}
+		return false;
+	}
+	else {
+		for (int i = 1; i < 3; ++i) {
+			if (mask->pixel(actualPos.x - i, actualPos.y - 1) == 255 || mask->pixel(actualPos.x - i, actualPos.y - 2) == 255) return true;
+		}
+		return false;
+	}
 }
 
 
