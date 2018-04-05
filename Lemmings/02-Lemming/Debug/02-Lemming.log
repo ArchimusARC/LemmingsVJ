@@ -1,2 +1,19 @@
-﻿  Lemming.cpp
-  02-Lemming.vcxproj -> C:\Users\PcCom\Desktop\LemmingsVJ\Lemmings\02-Lemming\Debug\02-Lemming.exe
+﻿  EndDoor.cpp
+  Game.cpp
+  Lemming.cpp
+  main.cpp
+  MaskedTexturedQuad.cpp
+  RedDoor.cpp
+  Scene.cpp
+  Shader.cpp
+  ShaderProgram.cpp
+  Sprite.cpp
+  Texture.cpp
+  VariableTexture.cpp
+  Generando código...
+  LINK : no se encontró C:\Users\Adrian\Documents\GitHub\LemmingsVJ\Lemmings\02-Lemming\Debug\02-Lemming.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
+SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'C:\Users\Adrian\Documents\GitHub\LemmingsVJ\Lemmings\02-Lemming\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'C:\Users\Adrian\Documents\GitHub\LemmingsVJ\Lemmings\02-Lemming\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'C:\Users\Adrian\Documents\GitHub\LemmingsVJ\Lemmings\02-Lemming\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(stb_image_aug.obj)' o en 'C:\Users\Adrian\Documents\GitHub\LemmingsVJ\Lemmings\02-Lemming\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+  02-Lemming.vcxproj -> C:\Users\Adrian\Documents\GitHub\LemmingsVJ\Lemmings\02-Lemming\Debug\02-Lemming.exe
