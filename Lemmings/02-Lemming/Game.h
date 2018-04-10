@@ -3,6 +3,7 @@
 
 
 #include "Scene.h"
+#include "SceneTuto.h"
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
@@ -40,7 +41,7 @@ public:
 
 private:
 	bool bPlay;                       // Continue to play game?
-	Scene scene;                      // Scene to render
+	SceneTuto scene;                  // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 	int mouseX, mouseY;               // Mouse position

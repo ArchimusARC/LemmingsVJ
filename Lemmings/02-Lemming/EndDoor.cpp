@@ -10,7 +10,7 @@ enum EndDoorAnims
 	DOOR
 };
 
-void EndDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram)
+void EndDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram, int mapDispl)
 {
 	spritesheet.loadFromFile("images/door.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMinFilter(GL_NEAREST);
@@ -25,6 +25,7 @@ void EndDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 
 	sprite->changeAnimation(DOOR);
 	sprite->setPosition(initialPosition);
+	displ = mapDispl;
 }
 
 void EndDoor::update(int deltaTime)
@@ -41,4 +42,10 @@ void EndDoor::render()
 void EndDoor::setMapMask(VariableTexture *mapMask)
 {
 	mask = mapMask;
+}
+
+glm::ivec2 EndDoor::position()
+{
+	glm::ivec2 actualPos = sprite->position() + glm::vec2(displ, 0);//position + map displacement
+	return actualPos += glm::ivec2(17, 25);//sprite displacement
 }

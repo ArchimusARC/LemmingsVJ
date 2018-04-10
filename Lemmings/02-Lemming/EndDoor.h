@@ -13,18 +13,19 @@ class EndDoor
 {
 
 public:
-	void init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram);
+	void init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram, int mapDispl);
 	void update(int deltaTime);
 	void render();
 
 	void setMapMask(VariableTexture *mapMask);
+	glm::ivec2 position();
 
 private:
 
 	Texture spritesheet;
 	Sprite *sprite;
 	VariableTexture *mask;
-	int opener;
+	int displ;
 };
 
 

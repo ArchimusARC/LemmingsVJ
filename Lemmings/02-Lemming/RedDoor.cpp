@@ -29,7 +29,7 @@ void RedDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 
 void RedDoor::update(int deltaTime)
 {	
-	if (sprite->update(deltaTime) == 0)
+	if (sprite->currentFrame() < 9 && sprite->update(deltaTime) == 0)
 		return;
 }
 

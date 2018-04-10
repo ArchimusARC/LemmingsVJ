@@ -37,24 +37,29 @@ void Scene::init()
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
-	for (int i = 0; i < 4; ++i){
-		lemmings[i].init(glm::vec2(60 + i*15, 30), simpleTexProgram);
-		lemmings[i].setMapMask(&maskTexture);
-	}
 	red_door.init(glm::vec2(65, 10), simpleTexProgram);
-	goal.init(glm::vec2(120,40), simpleTexProgram);
+	goal.init(glm::vec2(120,40), simpleTexProgram,120);
+	lemmingsInitiated = 0;
+	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, 120);
+	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
+	++lemmingsInitiated;
 }
-
-unsigned int x = 0;
 
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	for (int i = 0; i < 4; ++i){
-		lemmings[i].update(deltaTime);
+	if (lemmingsInitiated < 4 && lemmingsInitiated * 3000 >= currentTime) initiateNextLemming();
+	for (int i = 0; i <4; ++i) {
+		if (currentTime > i * 3000) lemmings[i].update(deltaTime);
 	}
-	if(red_door.opened())red_door.update(deltaTime);
+	if (red_door.opened())red_door.update(deltaTime);
 	goal.update(deltaTime);
+}
+
+void Scene::initiateNextLemming() {
+	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, 120);
+	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
+	++lemmingsInitiated;
 }
 
 void Scene::render()
@@ -76,11 +81,11 @@ void Scene::render()
 	simpleTexProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
 	simpleTexProgram.setUniformMatrix4f("modelview", modelview);
+	red_door.render();
+	goal.render();
 	for (int i = 0; i < 4; ++i){
 		lemmings[i].render();
 	}
-	red_door.render();
-	goal.render();
 }
 
 void Scene::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)

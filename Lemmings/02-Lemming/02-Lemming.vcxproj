@@ -19,6 +19,7 @@
     <ClInclude Include="MaskedTexturedQuad.h" />
     <ClInclude Include="RedDoor.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneTuto.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Sprite.h" />
@@ -33,6 +34,7 @@
     <ClCompile Include="MaskedTexturedQuad.cpp" />
     <ClCompile Include="RedDoor.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneTuto.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sprite.cpp" />

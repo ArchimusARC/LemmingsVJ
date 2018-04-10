@@ -30,6 +30,7 @@ private:
 	void initShaders();
 	void eraseMask(int mouseX, int mouseY);
 	void applyMask(int mouseX, int mouseY);
+	void initiateNextLemming();
 
 private:
 	Texture colorTexture, colorTexturePintar;
@@ -37,6 +38,8 @@ private:
 	MaskedTexturedQuad *map;
 	ShaderProgram simpleTexProgram, maskedTexProgram;
 	float currentTime;
+	int lemmingsInitiated;
+	bool accel;
 	glm::mat4 projection;
 	Lemming lemmings[4];
 	RedDoor red_door;

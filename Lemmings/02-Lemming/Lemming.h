@@ -14,11 +14,14 @@ class Lemming
 {
 
 public:
-	void init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram);
+	void init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram, int mapDispl);
 	void update(int deltaTime);
 	void render();
 	
 	void setMapMask(VariableTexture *mapMask);
+	glm::ivec2 position();
+	void give(int alt);
+	bool inTheBox(int x, int y);
 	
 private:
 	float LemmingAnimations = 8.0f;//Modificar cada cop que s'afegeixi una animació
@@ -29,6 +32,8 @@ private:
 	bool notColliding();
 	bool notABlocker();
 	bool stairCollision();
+
+	
 	void setAnimations(ShaderProgram &shaderProgram);
 	
 private:
@@ -36,13 +41,13 @@ private:
 	{
 		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_LEFT_STATE, FALLING_RIGHT_STATE, DEAD, 
 		DIGGING, BLOCKING, BASHING_LEFT, BASHING_RIGHT, CLIMBING_LEFT, CLIMBING_RIGHT, BUILDING_LEFT, 
-		BUILDING_RIGHT, FLOATING_LEFT, FLOATING_RIGHT
+		BUILDING_RIGHT, FLOATING_LEFT, FLOATING_RIGHT, VICTORIOUS
 	};
 	enum AltState //estats seguents que no podem controlar amb la maquina d'estats
 	{
-		NONE, DIGGER, CLIMBER, BASHER, PARACHUTE, BLOCKER, BUILDER
+		NONE, DIGGER, CLIMBER, BASHER, PARACHUTE, BLOCKER, BUILDER, WINNER	
 	};
-
+	int displ;
 	LemmingState state;
 	AltState given;
 	Texture spritesheet;
