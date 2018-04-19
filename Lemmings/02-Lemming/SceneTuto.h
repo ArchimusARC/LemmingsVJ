@@ -38,10 +38,13 @@ private:
 	MaskedTexturedQuad *map;
 	ShaderProgram simpleTexProgram, maskedTexProgram;
 	float currentTime;
-	int lemmingsInitiated, lemmingsLeft;
+	int lemmingsInitiated;
 	bool accel;
+	bool pause;
 	glm::mat4 projection;
 	Lemming lemmings[10];
+	int livingLemmings;
+	int victoriousLemmings;
 	RedDoor red_door;
 	EndDoor goal;
 

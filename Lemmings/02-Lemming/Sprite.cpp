@@ -48,6 +48,7 @@ int Sprite::update(int deltaTime)
 			currentKeyframe = (currentKeyframe + 1) % animations[currentAnimation].keyframeDispl.size();
 			frames++;
 		}
+		currentKeyframe = currentKeyframe % 16;
 		texCoordDispl = animations[currentAnimation].keyframeDispl[currentKeyframe];
 	}
 

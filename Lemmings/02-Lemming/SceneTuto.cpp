@@ -43,11 +43,11 @@ void SceneTuto::init()
 	red_door.init(glm::vec2(65, 10), simpleTexProgram);
 	goal.init(glm::vec2(222, 105), simpleTexProgram, 120);
 	lemmingsInitiated = 0;
-	lemmingsLeft = 0;
 	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, 120);
+	livingLemmings = 10;
+	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
-	//++lemmingsLeft;
 }
 
 void SceneTuto::update(int deltaTime)
@@ -58,10 +58,12 @@ void SceneTuto::update(int deltaTime)
 		if (currentTime > i * 3000) {
 			if (lemmings[i].position().x == goal.position().x && lemmings[i].position().y == goal.position().y) {
 				lemmings[i].give(7); //WINNER
-				//--lemmingsLeft;
 			}
 				
 			lemmings[i].update(deltaTime);
+			int j = lemmings[i].report();
+			if (j == -1) livingLemmings -= 1;
+			else if (j == 1) victoriousLemmings += 1;
 		}
 	}
 	if(red_door.opened())red_door.update(deltaTime);
@@ -72,7 +74,6 @@ void SceneTuto::initiateNextLemming() {
 	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, 120);
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
-	//++lemmingsLeft;
 }
 
 void SceneTuto::render()
@@ -108,16 +109,17 @@ void SceneTuto::render()
 void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
 {
 	int posX, posY;
-	if(bLeftButton)
-		//eraseMask(mouseX, mouseY);
-	for (int i = 0; i <10; ++i) {
-		posX = mouseX / 3 + 120;
-		posY = mouseY / 3;
-		if (lemmings[i].inTheBox(posX, posY))
-			lemmings[i].give(1); //DIGGER
-			//lemmings[i].give(5); //BLOCKER
-	}
+	if (bLeftButton) {
+		eraseMask(mouseX, mouseY);
+		for (int i = 0; i < 10; ++i) {
+			posX = mouseX / 3 + 120;
+			posY = mouseY / 3;
+			if (lemmings[i].inTheBox(posX, posY))
+				//lemmings[i].give(1); //DIGGER
+				lemmings[i].give(1); //BLOCKER
 
+		}
+	}
 	else if(bRightButton)
 		applyMask(mouseX, mouseY);
 }

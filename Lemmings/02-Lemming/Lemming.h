@@ -22,6 +22,7 @@ public:
 	glm::ivec2 position();
 	void give(int alt);
 	bool inTheBox(int x, int y);
+	int report();
 	
 private:
 	float LemmingAnimations = 8.0f;//Modificar cada cop que s'afegeixi una animació
@@ -32,7 +33,9 @@ private:
 	bool notColliding();
 	bool notABlocker();
 	bool stairCollision();
-
+	bool iSync();
+	bool iDoRender();
+	bool iDoNotUpdate();
 	
 	void setAnimations(ShaderProgram &shaderProgram);
 	
@@ -41,11 +44,11 @@ private:
 	{
 		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_LEFT_STATE, FALLING_RIGHT_STATE, DEAD, 
 		DIGGING, BLOCKING, BASHING_LEFT, BASHING_RIGHT, CLIMBING_LEFT, CLIMBING_RIGHT, BUILDING_LEFT, 
-		BUILDING_RIGHT, FLOATING_LEFT, FLOATING_RIGHT, VICTORIOUS
+		BUILDING_RIGHT, FLOATING_LEFT, FLOATING_RIGHT, VICTORIOUS, EXPLODING
 	};
 	enum AltState //estats seguents que no podem controlar amb la maquina d'estats
 	{
-		NONE, DIGGER, CLIMBER, BASHER, PARACHUTE, BLOCKER, BUILDER, WINNER	
+		NONE, DIGGER, CLIMBER, BASHER, PARACHUTE, BLOCKER, BUILDER, WINNER, EXPLODE	
 	};
 	int displ;
 	LemmingState state;
