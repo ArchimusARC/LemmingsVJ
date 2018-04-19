@@ -590,8 +590,8 @@ glm::ivec2 Lemming::position() {
 }
 
 int Lemming::report() {
-	if (state = DEAD) return -1;
-	else if (state = VICTORIOUS) return 1;
+	if (state == DEAD) return -1;
+	else if (state == VICTORIOUS) return 1;
 	else return 0;
 }
 

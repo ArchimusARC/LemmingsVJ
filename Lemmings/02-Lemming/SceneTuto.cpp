@@ -48,6 +48,7 @@ void SceneTuto::init()
 	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
+	toolbar.init(glm::vec2(65, 10), simpleTexProgram);
 }
 
 void SceneTuto::update(int deltaTime)
@@ -61,6 +62,7 @@ void SceneTuto::update(int deltaTime)
 			}
 				
 			lemmings[i].update(deltaTime);
+
 			int j = lemmings[i].report();
 			if (j == -1) livingLemmings -= 1;
 			else if (j == 1) victoriousLemmings += 1;
@@ -100,6 +102,7 @@ void SceneTuto::render()
 	for (int i = 0; i < 10; ++i){
 		if (currentTime > i * 3000) lemmings[i].render();
 	}
+	toolbar.render();
 
 	/*glRasterPos2f(5.0, 5.0);
 	glutBitmapCharacter(GLUT_BITMAP_8_BY_13, char(lemmingsLeft));*/

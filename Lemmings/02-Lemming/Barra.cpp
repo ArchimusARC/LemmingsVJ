@@ -11,7 +11,6 @@
 #define FALL_STEP 4
 
 
-
 void Barra::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram)
 {
 	state = NONE;
@@ -30,13 +29,13 @@ void Barra::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram)
 	position = initialPosition;
 }
 
-void Barra::update()
+void Barra::update(ShaderProgram &shaderProgram)
 {
 	if (lastState != state && state > (BarraState)0  && state < EXPLOSION) {
 		spritesheetboto.loadFromFile("images/toolbar/toolbarfull.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		spritesheetboto.setMinFilter(GL_NEAREST);
 		spritesheetboto.setMagFilter(GL_NEAREST);
-		spriteboto = Sprite::createSprite(glm::ivec2(52, 74), glm::vec2(0.0, 0.0), &spritesheet, &shaderProgram2);
+		spriteboto = Sprite::createSprite(glm::ivec2(52, 74), glm::vec2(0.0, 0.0), &spritesheet, &shaderProgram);
 		spriteboto->setNumberAnimations(1);
 
 		spriteboto->setAnimationSpeed(state, 12);

@@ -14,8 +14,9 @@ class Barra
 {
 
 public:
+
 	void init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram);
-	void update();
+	void update(ShaderProgram &shaderProgram);
 	void render();
 	int checkState(int x, int y);
 	void setDispl(int mapDispl);
@@ -35,7 +36,6 @@ private:
 	Texture spritesheet, spritesheetboto;
 	Sprite *sprite, *spriteboto;
 	VariableTexture *mask;
-	ShaderProgram &shaderProgram2;
 	glm::vec2 position;
 	int displ;
 };

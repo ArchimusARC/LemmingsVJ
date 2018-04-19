@@ -8,6 +8,7 @@
 #include "Lemming.h"
 #include "RedDoor.h"
 #include "EndDoor.h"
+#include "Barra.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -47,6 +48,7 @@ private:
 	int victoriousLemmings;
 	RedDoor red_door;
 	EndDoor goal;
+	Barra toolbar;
 
 };
 
