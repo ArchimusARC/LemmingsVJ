@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "VariableTexture.h"
+#include "../irrKlang-1.6.0/include/irrKlang.h"
 
 
 //End door, goal of the game
@@ -26,6 +27,7 @@ private:
 	Sprite *sprite;
 	VariableTexture *mask;
 	int displ;
+	irrklang::ISoundEngine* engine;
 };
 
 

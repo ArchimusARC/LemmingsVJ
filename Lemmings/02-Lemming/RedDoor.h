@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "VariableTexture.h"
+#include "../irrKlang-1.6.0/include/irrKlang.h"
 
 
 // Lemming is basically a Sprite that represents one lemming. As such it has
@@ -26,6 +27,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	VariableTexture *mask;
+	irrklang::ISoundEngine* engine;
 	int opener;
 };
 

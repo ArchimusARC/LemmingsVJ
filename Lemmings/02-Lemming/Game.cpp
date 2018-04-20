@@ -12,7 +12,7 @@ void Game::init()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	current_scene = MENU;
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("/sounds/highway_to_hell.wav", true);
+	engine->play2D("highway.wav", true);
 	sceneMenu.init();
 }
 
@@ -28,9 +28,11 @@ bool Game::update(int deltaTime)
 		break;
 
 	case LEVEL2:
+		//sceneLevel2.update(deltaTime);
 		break;
 
 	case LEVEL3:
+		//sceneLevel3.update(deltaTime);
 		break;
 
 	case CONTROLS:
@@ -38,12 +40,15 @@ bool Game::update(int deltaTime)
 		break;
 
 	case WIN_LEVEL:
+		//sceneWin.update(deltaTime);
 		break;
 
 	case FAIL_LEVEL:
+		//sceneFail.update(deltaTime);
 		break;
 
 	case CREDITS:
+		//sceneCredits.update(deltaTime);
 		break;
 
 	default:
@@ -69,9 +74,11 @@ void Game::render()
 		break;
 
 	case LEVEL2:
+		//sceneLevel2.render();
 		break;
 
 	case LEVEL3:
+		//sceneLevel3.render();
 		break;
 
 	case CONTROLS:
@@ -79,12 +86,15 @@ void Game::render()
 		break;
 
 	case WIN_LEVEL:
+		//sceneWin.render();
 		break;
 
 	case FAIL_LEVEL:
+		//sceneFail.render();
 		break;
 
 	case CREDITS:
+		//sceneCredits.render();
 		break;
 	default:
 		break;
@@ -101,6 +111,7 @@ void Game::keyPressed(int key)
 		if (key == 48 || key == 49) { //0 and 1 code
 			current_level = 1;
 			current_scene = LEVEL1;
+			engine->drop();
 			sceneTuto.init();
 		}
 		if (key == 50) {			//2 code
@@ -127,11 +138,42 @@ void Game::keyPressed(int key)
 			current_scene = MENU;
 			sceneMenu.init();
 		}
+		if (key == 78) { //N code
+			current_level = current_level + 1;
+			if (current_level == 2) {
+				current_scene = LEVEL2;
+				engine->drop();
+				//sceneLevel2.init();
+			}
+			else if (current_level == 3) {
+				current_scene = LEVEL3;
+				engine->drop();
+				//sceneLevel3.init();
+			}
+		}
+
 		break;
 	case FAIL_LEVEL:
 		if (key == 27) {// Escape code
 			current_scene = MENU;
 			sceneMenu.init();
+		}
+		if (key == 82) { //R code
+			if (current_level == 1) {
+				current_scene = LEVEL1;
+				engine->drop();
+				sceneTuto.init();
+			}
+			else if (current_level == 2) {
+				current_scene = LEVEL2;
+				engine->drop();
+				//sceneLevel2.init();
+			}
+			else if (current_level == 3) {
+				current_scene = LEVEL3;
+				engine->drop();
+				//sceneLevel3.init();
+			}
 		}
 		break;
 	case CREDITS:
@@ -166,7 +208,37 @@ void Game::mouseMove(int x, int y)
 {
 	mouseX = x;
 	mouseY = y;
-	sceneMenu.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
+	
+	switch (current_scene) {
+	case MENU:
+		sceneMenu.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
+		break;
+
+	case LEVEL1:
+		sceneTuto.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
+		break;
+
+	case LEVEL2:
+		break;
+
+	case LEVEL3:
+		break;
+
+	case CONTROLS:
+		sceneControls.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
+		break;
+
+	case WIN_LEVEL:
+		break;
+
+	case FAIL_LEVEL:
+		break;
+
+	case CREDITS:
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::mousePress(int button)

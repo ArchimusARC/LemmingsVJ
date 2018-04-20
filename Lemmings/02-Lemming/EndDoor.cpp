@@ -5,6 +5,8 @@
 #include "EndDoor.h"
 #include "Game.h"
 
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
+
 enum EndDoorAnims
 {
 	DOOR
@@ -22,7 +24,8 @@ void EndDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 	for (int i = 0; i<6; i++)
 		sprite->addKeyframe(DOOR, glm::vec2(float(i) / 6, 0.0f));
 
-
+	engine = irrklang::createIrrKlangDevice();
+	engine->play2D("fire.wav", true);
 	sprite->changeAnimation(DOOR);
 	sprite->setPosition(initialPosition);
 	displ = mapDispl;

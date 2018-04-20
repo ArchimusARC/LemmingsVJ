@@ -5,6 +5,8 @@
 #include "RedDoor.h"
 #include "Game.h"
 
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
+
 enum RedDoorAnims
 {
 	OPEN_DOOR
@@ -23,8 +25,11 @@ void RedDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 		sprite->addKeyframe(OPEN_DOOR, glm::vec2(float(i) / 10, 0.0f));
 
 	opener = 0;
+	engine = irrklang::createIrrKlangDevice();
+	engine->play2D("door.wav", false);
 	sprite->changeAnimation(OPEN_DOOR);
 	sprite->setPosition(initialPosition);
+	
 }
 
 void RedDoor::update(int deltaTime)

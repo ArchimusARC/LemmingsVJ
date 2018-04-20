@@ -7,6 +7,7 @@
 #include <gl/glu.h>	// OpenGL utilties
 #include <GL/glut.h>
 
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
 
 SceneTuto::SceneTuto()
 {
@@ -52,6 +53,9 @@ void SceneTuto::init()
 	//toolbar.init(glm::vec2(65, 10), simpleTexProgram);
 	accel = false;
 	pause = false;
+
+	engine = irrklang::createIrrKlangDevice();
+	engine->play2D("cowboys.wav", true);
 }
 
 void SceneTuto::update(int deltaTime)
@@ -63,6 +67,7 @@ void SceneTuto::update(int deltaTime)
 	for (int i = 0; i <10; ++i){
 		if (currentTime > i * 3000) {
 			if (lemmings[i].position().x == goal.position().x && lemmings[i].position().y == goal.position().y) {
+				
 				lemmings[i].give(7); //WINNER
 			}
 				
@@ -75,6 +80,7 @@ void SceneTuto::update(int deltaTime)
 	}
 	if(red_door.opened())red_door.update(deltaTime);
 	goal.update(deltaTime);
+	toolbar.update(simpleTexProgram);
 }
 
 void SceneTuto::initiateNextLemming() {
@@ -109,8 +115,7 @@ void SceneTuto::render()
 	}
 	//toolbar.render();
 
-	/*glRasterPos2f(5.0, 5.0);
-	glutBitmapCharacter(GLUT_BITMAP_8_BY_13, char(lemmingsLeft));*/
+
 
 }
 
@@ -123,8 +128,12 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
 			if (lemmings[i].inTheBox(posX, posY))
-				lemmings[i].give(1); //DIGGER
-				//lemmings[i].give(1); //BLOCKER
+				//lemmings[i].give(1); //DIGGER
+				//lemmings[i].give(2); //CLIMBER
+				//lemmings[i].give(3); //BASHER
+				lemmings[i].give(4); //PARACHUTE
+				//lemmings[i].give(5); //BLOCKER
+				//lemmings[i].give(6); //BUILDER
 
 		}
 	}

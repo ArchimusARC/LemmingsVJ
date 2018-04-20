@@ -9,6 +9,7 @@
 #include "RedDoor.h"
 #include "EndDoor.h"
 #include "Barra.h"
+#include "../irrKlang-1.6.0/include/irrKlang.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -50,6 +51,7 @@ private:
 	RedDoor red_door;
 	EndDoor goal;
 	Barra toolbar;
+	irrklang::ISoundEngine* engine;
 
 };
 

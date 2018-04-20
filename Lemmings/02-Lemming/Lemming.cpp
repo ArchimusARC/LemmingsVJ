@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include "Lemming.h"
 #include "Game.h"
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
 
 
 #define JUMP_ANGLE_STEP 4
@@ -26,6 +27,7 @@ void Lemming::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 	build = 0;
 	state = FALLING_RIGHT_STATE;
 	given = NONE;
+	engine = irrklang::createIrrKlangDevice();
 	setAnimations(shaderProgram);
 	sprite->changeAnimation(FALLING_RIGHT);
 	sprite->setPosition(initialPosition);
@@ -38,15 +40,17 @@ void Lemming::update(int deltaTime)
 	if (iDoNotUpdate()) return;
 	if (sprite->update(deltaTime) == 0) return;
 	if (iSync()) return;
-	if (given == WINNER) {
+	if (given == WINNER && state != VICTORIOUS) {
+		engine->play2D("coin.wav", false);
 		sprite->changeAnimation(ENDWALK);
 		state = VICTORIOUS;
 	}
 	else if (given == EXPLODE) {
 		state = EXPLODING;
+		engine->play2D("explode.wav", false);
 		//sprite->changeAnimation(EXPLODE);
 	}
-	else if (given == BLOCKER && (state != FALLING_LEFT_STATE || state != FALLING_RIGHT_STATE)) {
+	else if (given == BLOCKER && (state != FALLING_LEFT_STATE || state != FALLING_RIGHT_STATE) && state != BLOCKING) {
 		sprite->changeAnimation(STOPPER);
 		state = BLOCKING;
 		
@@ -56,8 +60,14 @@ void Lemming::update(int deltaTime)
 		state = DIGGING;
 		
 	}
-	else if (given == BUILDER && state == WALKING_LEFT_STATE) state = BUILDING_LEFT;
-	else if (given == BUILDER && state == WALKING_RIGHT_STATE) state = BUILDING_RIGHT;
+	else if (given == BUILDER && state == WALKING_LEFT_STATE) {
+		sprite->changeAnimation(BUILDING_LEFT);
+		state = BUILDING_LEFT;
+	}
+	else if (given == BUILDER && state == WALKING_RIGHT_STATE) {
+		sprite->changeAnimation(BUILDING_RIGHT);
+		state = BUILDING_RIGHT;
+	}
 	bool col;
 	glm::ivec2 actualPos;
 	switch (state)
@@ -67,9 +77,13 @@ void Lemming::update(int deltaTime)
 		if (fall > 1) {
 			sprite->position() += glm::vec2(0, fall);
 			fallDistance += fall;
-			if (given == PARACHUTE) sprite->changeAnimation(FLOATING_LEFT);
+			if (given == PARACHUTE && sprite->animation() != PARACHUTE_LEFT) {
+				engine->play2D("pop.wav", false);
+				sprite->changeAnimation(PARACHUTE_LEFT);
+			}	
 			actualPos = sprite->position();
 			if (actualPos.y + fall >= 170) {
+				engine->play2D("roblox_death.wav", false);
 				sprite->changeAnimation(DEATH);
 				state = DEAD;
 				
@@ -80,6 +94,7 @@ void Lemming::update(int deltaTime)
 			state = WALKING_LEFT_STATE;
 			if (fallDistance + fall > 50 && given != PARACHUTE) {
 				sprite->changeAnimation(DEATH);
+				engine->play2D("roblox_death.wav", false);
 				state = DEAD;
 				
 			}
@@ -91,10 +106,14 @@ void Lemming::update(int deltaTime)
 		if (fall > 1) {
 			sprite->position() += glm::vec2(0, fall);
 			fallDistance += fall;
-			if (given == PARACHUTE) sprite->changeAnimation(FLOATING_RIGHT);
+			if (given == PARACHUTE && sprite->animation() != PARACHUTE_RIGHT) {
+				engine->play2D("pop.wav", false);
+				sprite->changeAnimation(PARACHUTE_RIGHT);
+			}
 			actualPos = sprite->position();
 			if (actualPos.y + fall >= 170) {
 				sprite->changeAnimation(DEATH);
+				engine->play2D("roblox_death.wav", false);
 				state = DEAD;
 				
 			}
@@ -102,6 +121,7 @@ void Lemming::update(int deltaTime)
 		else {
 			if (fallDistance + fall > 50 && given != PARACHUTE) {
 				sprite->changeAnimation(DEATH);
+				engine->play2D("roblox_death.wav", false);
 				state = DEAD;
 				
 			}
@@ -187,6 +207,7 @@ void Lemming::update(int deltaTime)
 		if (col) {
 			for (int i = 0; i < 5; ++i) {
 				mask->setPixel(actualPos.x + i - 2, actualPos.y + 1, 0);
+				engine->play2D("dig.wav", false);
 			}
 		}
 		fall = collisionFloor(3);
@@ -220,6 +241,7 @@ void Lemming::update(int deltaTime)
 			actualPos = sprite->position() + glm::vec2(displ, 0);//position + map displacement
 			actualPos += glm::ivec2(7, 15);//sprite displacement
 			for (int i = 0; i < 10; ++i) {
+				engine->play2D("dig.wav", false);
 				mask->setPixel(actualPos.x - 1, actualPos.y - i, 0);
 			}
 		}
@@ -243,6 +265,7 @@ void Lemming::update(int deltaTime)
 			actualPos = sprite->position() + glm::vec2(displ, 0);//position + map displacement
 			actualPos += glm::ivec2(7, 15);//sprite displacement
 			for (int i = 0; i < 10; ++i) {
+				engine->play2D("dig.wav", false);
 				mask->setPixel(actualPos.x + 2, actualPos.y - i, 0);
 			}
 		}
@@ -264,6 +287,7 @@ void Lemming::update(int deltaTime)
 	case BLOCKING:
 		actualPos = sprite->position() + glm::vec2(displ, 0);//position + map displacement
 		actualPos += glm::ivec2(7, 15);//sprite displacement
+		
 		for (int i = -4; i < 6; ++i) {
 			mask->setPixel(actualPos.x + i, actualPos.y, 200);
 			mask->setPixel(actualPos.x + i, actualPos.y - 9, 200);
@@ -278,6 +302,7 @@ void Lemming::update(int deltaTime)
 		actualPos += glm::ivec2(7, 15);//sprite displacement
 		if (!stairCollision() && !buildFinished()) {
 			for (int i = 1; i < 7; ++i) {
+				engine->play2D("build.wav", false);
 				mask->setPixel(actualPos.x - i, actualPos.y, 255);
 			}
 			sprite->position() += glm::vec2(-2, -1);
@@ -293,6 +318,7 @@ void Lemming::update(int deltaTime)
 		actualPos += glm::ivec2(7, 15);//sprite displacement
 		if (!stairCollision() && !buildFinished()) {
 			for (int i = 2; i < 8; ++i) {
+				engine->play2D("build.wav", false);
 				mask->setPixel(actualPos.x + i, actualPos.y, 255);
 			}
 			sprite->position() += glm::vec2(2, -1);
@@ -455,7 +481,7 @@ bool Lemming::iDoRender() {
 		else return true;
 		break;
 	case VICTORIOUS:
-		if (sprite->currentFrame() == 15) return false;
+		if (sprite->currentFrame() == 7) return false;
 		else return true;
 		break;
 	}
@@ -469,7 +495,7 @@ bool Lemming::iDoNotUpdate() {
 		else return false;
 		break;
 	case VICTORIOUS:
-		if (sprite->currentFrame() == 15) return true;
+		if (sprite->currentFrame() == 7) return true;
 		else return false;
 		break;
 	}
@@ -573,6 +599,9 @@ void Lemming::setAnimations(ShaderProgram &shaderProgram) {
 }
 
 void Lemming::give(int alt) {
+	if (alt == 5) {
+		engine->play2D("block.wav", false);
+	}
 	given = (AltState)alt;
 }
 
