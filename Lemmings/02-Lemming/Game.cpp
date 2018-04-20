@@ -32,7 +32,7 @@ bool Game::update(int deltaTime)
 		break;
 
 	case LEVEL3:
-		//sceneLevel3.update(deltaTime);
+		level3.update(deltaTime);
 		break;
 
 	case CONTROLS:
@@ -78,7 +78,7 @@ void Game::render()
 		break;
 
 	case LEVEL3:
-		//sceneLevel3.render();
+		level3.render();
 		break;
 
 	case CONTROLS:
@@ -123,6 +123,8 @@ void Game::keyPressed(int key)
 		if (key == 51) {			//3 code
 			current_level = 3;
 			current_scene = LEVEL3;
+			engine->drop();
+			level3.init();
 		}
 		if (key == 99) {			//c code
 			current_scene = CONTROLS;
@@ -145,12 +147,12 @@ void Game::keyPressed(int key)
 			if (current_level == 2) {
 				current_scene = LEVEL2;
 				engine->drop();
-				//sceneLevel2.init();
+				level2.init();
 			}
 			else if (current_level == 3) {
 				current_scene = LEVEL3;
 				engine->drop();
-				//sceneLevel3.init();
+				level3.init();
 			}
 		}
 
@@ -169,12 +171,12 @@ void Game::keyPressed(int key)
 			else if (current_level == 2) {
 				current_scene = LEVEL2;
 				engine->drop();
-				//sceneLevel2.init();
+				level2.init();
 			}
 			else if (current_level == 3) {
 				current_scene = LEVEL3;
 				engine->drop();
-				//sceneLevel3.init();
+				level3.init();
 			}
 		}
 		break;
@@ -221,9 +223,11 @@ void Game::mouseMove(int x, int y)
 		break;
 
 	case LEVEL2:
+		level2.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 		break;
 
 	case LEVEL3:
+		level3.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 		break;
 
 	case CONTROLS:

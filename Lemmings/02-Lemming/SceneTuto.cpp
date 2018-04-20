@@ -50,7 +50,7 @@ void SceneTuto::init()
 	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
-	toolbar.init(glm::vec2(65, 10), simpleTexProgram);
+	toolbar.init(glm::vec2(0, 142), simpleTexProgram, displ);
 	accel = false;
 	pause = false;
 
@@ -81,7 +81,7 @@ void SceneTuto::update(int deltaTime)
 	}
 	if(red_door.opened())red_door.update(deltaTime);
 	goal.update(deltaTime);
-	toolbar.update(simpleTexProgram);
+	
 }
 
 void SceneTuto::initiateNextLemming() {
@@ -153,21 +153,18 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 
 	int posX, posY;
 	if (bLeftButton) {
+		int j = toolbar.checkState(mouseX, mouseY);
+		if (j < 11 && j >= 0) selectedPower = j;
 		eraseMask(mouseX, mouseY);
 		for (int i = 0; i < 10; ++i) {
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
 			if (lemmings[i].inTheBox(posX, posY))
-				//lemmings[i].give(1); //DIGGER
-				//lemmings[i].give(2); //CLIMBER
-				//lemmings[i].give(3); //BASHER
-				lemmings[i].give(4); //PARACHUTE
-				//lemmings[i].give(5); //BLOCKER
-				//lemmings[i].give(6); //BUILDER
+				lemmings[i].give(selectedPower);
 
 		}
 	}
-	else if(bRightButton)
+	else if (bRightButton)
 		applyMask(mouseX, mouseY);
 }
 

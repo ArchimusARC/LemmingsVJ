@@ -2,26 +2,26 @@
 #include <cmath>
 #include <algorithm>
 #include <glm/gtc/matrix_transform.hpp>
-#include "SceneLevel2.h"
+#include "SceneLevel3.h"
 #include <gl/gl.h>	// standard OpenGL include
 #include <gl/glu.h>	// OpenGL utilties
 #include <GL/glut.h>
 
 #pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
 
-SceneLevel2::SceneLevel2()
+SceneLevel3::SceneLevel3()
 {
 	map = NULL;
 }
 
-SceneLevel2::~SceneLevel2()
+SceneLevel3::~SceneLevel3()
 {
 	if (map != NULL)
 		delete map;
 }
 
 
-void SceneLevel2::init()
+void SceneLevel3::init()
 {
 	displ = 120;
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(float(CAMERA_WIDTH), float(CAMERA_HEIGHT)) };
@@ -30,22 +30,22 @@ void SceneLevel2::init()
 	initShaders();
 
 	map = MaskedTexturedQuad::createTexturedQuad(geom, texCoords, maskedTexProgram);
-	colorTexture.loadFromFile("images/level2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	colorTexture.loadFromFile("images/level3.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	colorTexture.setMinFilter(GL_NEAREST);
 	colorTexture.setMagFilter(GL_NEAREST);
 	colorTexturePintar.loadFromFile("images/texturadefons2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	colorTexturePintar.setMinFilter(GL_NEAREST);
 	colorTexturePintar.setMagFilter(GL_NEAREST);
-	maskTexture.loadFromFile("images/level2_mask.png", TEXTURE_PIXEL_FORMAT_L);
+	maskTexture.loadFromFile("images/level3_mask.png", TEXTURE_PIXEL_FORMAT_L);
 	maskTexture.setMinFilter(GL_NEAREST);
 	maskTexture.setMagFilter(GL_NEAREST);
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
-	red_door.init(glm::vec2(75, 5), simpleTexProgram);
-	goal.init(glm::vec2(765, 110), simpleTexProgram, displ);
+	red_door.init(glm::vec2(65, 10), simpleTexProgram);
+	goal.init(glm::vec2(222, 105), simpleTexProgram, displ);
 	lemmingsInitiated = 0;
-	lemmings[lemmingsInitiated].init(glm::vec2(95, 21), simpleTexProgram, displ);
+	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, displ);
 	livingLemmings = 10;
 	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
@@ -55,11 +55,11 @@ void SceneLevel2::init()
 	pause = false;
 
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("bell_tolls.wav", true);
+	engine->play2D("orion.wav", true);
 	inicialited = true;
 }
 
-void SceneLevel2::update(int deltaTime)
+void SceneLevel3::update(int deltaTime)
 {
 	if (pause) deltaTime = 0;
 	else if (accel) deltaTime = deltaTime * 2;
@@ -81,16 +81,15 @@ void SceneLevel2::update(int deltaTime)
 	}
 	if (red_door.opened())red_door.update(deltaTime);
 	goal.update(deltaTime);
-	
 }
 
-void SceneLevel2::initiateNextLemming() {
-	lemmings[lemmingsInitiated].init(glm::vec2(95, 21), simpleTexProgram, displ);
+void SceneLevel3::initiateNextLemming() {
+	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, displ);
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
 }
 
-void SceneLevel2::render()
+void SceneLevel3::render()
 {
 	glm::mat4 modelview;
 
@@ -120,7 +119,7 @@ void SceneLevel2::render()
 
 }
 
-void SceneLevel2::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
+void SceneLevel3::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
 {
 	if (mouseX > 940 && mouseX < 960 && displ < 700 && inicialited) {
 		map->free();
@@ -162,8 +161,8 @@ void SceneLevel2::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRig
 				//lemmings[i].give(2); //CLIMBER
 				//lemmings[i].give(3); //BASHER
 				lemmings[i].give(4); //PARACHUTE
-				//lemmings[i].give(5); //BLOCKER
-				//lemmings[i].give(6); //BUILDER
+									 //lemmings[i].give(5); //BLOCKER
+									 //lemmings[i].give(6); //BUILDER
 
 		}
 	}
@@ -171,7 +170,7 @@ void SceneLevel2::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRig
 		applyMask(mouseX, mouseY);
 }
 
-void SceneLevel2::eraseMask(int mouseX, int mouseY)
+void SceneLevel3::eraseMask(int mouseX, int mouseY)
 {
 	int posX, posY;
 
@@ -187,7 +186,7 @@ void SceneLevel2::eraseMask(int mouseX, int mouseY)
 	}
 }
 
-void SceneLevel2::applyMask(int mouseX, int mouseY)
+void SceneLevel3::applyMask(int mouseX, int mouseY)
 {
 	int posX, posY;
 
@@ -203,7 +202,7 @@ void SceneLevel2::applyMask(int mouseX, int mouseY)
 	}
 }
 
-void SceneLevel2::initShaders()
+void SceneLevel3::initShaders()
 {
 	Shader vShader, fShader;
 

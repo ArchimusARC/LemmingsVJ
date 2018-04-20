@@ -1,5 +1,5 @@
-#ifndef _SCENETUTO_INCLUDE
-#define _SCENETUTO_INCLUDE
+#ifndef _SCENELEVEL3_INCLUDE
+#define _SCENELEVEL3_INCLUDE
 
 
 #include <glm/glm.hpp>
@@ -15,17 +15,17 @@
 // It is responsible for updating and render them.
 
 
-class SceneTuto
+class SceneLevel3
 {
 
 public:
-	SceneTuto();
-	~SceneTuto();
+	SceneLevel3();
+	~SceneLevel3();
 
 	void init();
 	void update(int deltaTime);
 	void render();
-	
+
 	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
 
 private:
@@ -49,7 +49,6 @@ private:
 	int livingLemmings;
 	int victoriousLemmings;
 	int displ;
-	int selectedPower;
 	RedDoor red_door;
 	EndDoor goal;
 	Barra toolbar;
@@ -58,5 +57,4 @@ private:
 };
 
 
-#endif // _SCENETUTO_INCLUDE
-
+#endif // _SCENELEVEL3_INCLUDE
