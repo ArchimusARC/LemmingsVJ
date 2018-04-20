@@ -4,7 +4,9 @@
 
 #include "Scene.h"
 #include "SceneTuto.h"
-//#include "SceneMenu.h"
+#include "SceneMenu.h"
+#include "SceneControls.h"
+
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
@@ -41,15 +43,23 @@ public:
 	bool getSpecialKey(int key) const;
 
 private:
+	enum Scenes {
+		MENU, LEVEL1, LEVEL2, LEVEL3, CREDITS, CONTROLS, WIN_LEVEL, FAIL_LEVEL
+	};
+
 	bool bPlay;   // Continue to play game?
-	//Scene scene;
-	SceneTuto scene;// tuto;			  // Scene to render
-	//SceneMenu sceneMenu;
+	Scene scene;
+	SceneTuto sceneTuto;
+	SceneMenu sceneMenu;
+	SceneControls sceneControls;
+	Scenes current_scene;
+	int current_level;
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 	int mouseX, mouseY;               // Mouse position
 	bool bLeftMouse, bRightMouse;     // Mouse button states
 
+	
 };
 
 

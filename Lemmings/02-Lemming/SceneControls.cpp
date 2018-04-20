@@ -2,30 +2,30 @@
 #include <cmath>
 #include <algorithm>
 #include <glm/gtc/matrix_transform.hpp>
-#include "SceneMenu.h"
+#include "SceneControls.h"
 
 
-SceneMenu::SceneMenu()
+SceneControls::SceneControls()
 {
 	map = NULL;
 }
 
-SceneMenu::~SceneMenu()
+SceneControls::~SceneControls()
 {
-	if(map != NULL)
+	if (map != NULL)
 		delete map;
 }
 
 
-void SceneMenu::init()
+void SceneControls::init()
 {
-	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(float(CAMERA_WIDTH), float(CAMERA_HEIGHT))};
-	glm::vec2 texCoords[2] = {glm::vec2(0.f / 512.0, 0.f), glm::vec2(1, 1)};
+	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(float(CAMERA_WIDTH), float(CAMERA_HEIGHT)) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f / 512.0, 0.f), glm::vec2(1, 1) };
 
 	initShaders();
 
 	map = MaskedTexturedQuad::createTexturedQuad(geom, texCoords, maskedTexProgram);
-	colorTexture.loadFromFile("images/menu/menu_full.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	colorTexture.loadFromFile("images/menu/instructions_full.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	colorTexture.setMinFilter(GL_NEAREST);
 	colorTexture.setMagFilter(GL_NEAREST);
 	maskTexture.loadFromFile("images//menu/menu_mask.png", TEXTURE_PIXEL_FORMAT_L);
@@ -36,13 +36,14 @@ void SceneMenu::init()
 	currentTime = 0.0f;
 }
 
+unsigned int x = 0;
 
-void SceneMenu::update(int deltaTime)
+void SceneControls::update(int deltaTime)
 {
 	currentTime += deltaTime;
 }
 
-void SceneMenu::render()
+void SceneControls::render()
 {
 	glm::mat4 modelview;
 
@@ -52,7 +53,7 @@ void SceneMenu::render()
 	modelview = glm::mat4(1.0f);
 	maskedTexProgram.setUniformMatrix4f("modelview", modelview);
 	map->render(maskedTexProgram, colorTexture, maskTexture);
-	
+
 	simpleTexProgram.use();
 	simpleTexProgram.setUniformMatrix4f("projection", projection);
 	simpleTexProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
@@ -60,24 +61,24 @@ void SceneMenu::render()
 	simpleTexProgram.setUniformMatrix4f("modelview", modelview);
 }
 
-void SceneMenu::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
+void SceneControls::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
 {
-	
+
 }
 
 
-void SceneMenu::initShaders()
+void SceneControls::initShaders()
 {
 	Shader vShader, fShader;
 
 	vShader.initFromFile(VERTEX_SHADER, "shaders/texture.vert");
-	if(!vShader.isCompiled())
+	if (!vShader.isCompiled())
 	{
 		cout << "Vertex Shader Error" << endl;
 		cout << "" << vShader.log() << endl << endl;
 	}
 	fShader.initFromFile(FRAGMENT_SHADER, "shaders/texture.frag");
-	if(!fShader.isCompiled())
+	if (!fShader.isCompiled())
 	{
 		cout << "Fragment Shader Error" << endl;
 		cout << "" << fShader.log() << endl << endl;
@@ -86,7 +87,7 @@ void SceneMenu::initShaders()
 	simpleTexProgram.addShader(vShader);
 	simpleTexProgram.addShader(fShader);
 	simpleTexProgram.link();
-	if(!simpleTexProgram.isLinked())
+	if (!simpleTexProgram.isLinked())
 	{
 		cout << "Shader Linking Error" << endl;
 		cout << "" << simpleTexProgram.log() << endl << endl;
@@ -96,13 +97,13 @@ void SceneMenu::initShaders()
 	fShader.free();
 
 	vShader.initFromFile(VERTEX_SHADER, "shaders/maskedTexture.vert");
-	if(!vShader.isCompiled())
+	if (!vShader.isCompiled())
 	{
 		cout << "Vertex Shader Error" << endl;
 		cout << "" << vShader.log() << endl << endl;
 	}
 	fShader.initFromFile(FRAGMENT_SHADER, "shaders/maskedTexture.frag");
-	if(!fShader.isCompiled())
+	if (!fShader.isCompiled())
 	{
 		cout << "Fragment Shader Error" << endl;
 		cout << "" << fShader.log() << endl << endl;
@@ -111,7 +112,7 @@ void SceneMenu::initShaders()
 	maskedTexProgram.addShader(vShader);
 	maskedTexProgram.addShader(fShader);
 	maskedTexProgram.link();
-	if(!maskedTexProgram.isLinked())
+	if (!maskedTexProgram.isLinked())
 	{
 		cout << "Shader Linking Error" << endl;
 		cout << "" << maskedTexProgram.log() << endl << endl;
@@ -120,6 +121,3 @@ void SceneMenu::initShaders()
 	vShader.free();
 	fShader.free();
 }
-
-
-

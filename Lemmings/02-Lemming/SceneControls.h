@@ -1,5 +1,6 @@
-#ifndef _SCENEMENU_INCLUDE
-#define _SCENEMENU_INCLUDE
+
+#ifndef _SCENECONTROLS_INCLUDE
+#define _SCENECONTROLS_INCLUDE
 
 
 #include <glm/glm.hpp>
@@ -12,17 +13,17 @@
 // It is responsible for updating and render them.
 
 
-class SceneMenu
+class SceneControls
 {
 
 public:
-	SceneMenu();
-	~SceneMenu();
+	SceneControls();
+	~SceneControls();
 
 	void init();
 	void update(int deltaTime);
 	void render();
-	
+
 	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
 
 private:
@@ -39,5 +40,5 @@ private:
 };
 
 
-#endif // _SCENEMENU_INCLUDE
+#endif // _SCENECONTROLS_INCLUDE
 
