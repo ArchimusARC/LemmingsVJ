@@ -50,7 +50,7 @@ void SceneTuto::init()
 	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
-	//toolbar.init(glm::vec2(65, 10), simpleTexProgram);
+	toolbar.init(glm::vec2(65, 10), simpleTexProgram);
 	accel = false;
 	pause = false;
 
@@ -113,7 +113,7 @@ void SceneTuto::render()
 	for (int i = 0; i < 10; ++i){
 		if (currentTime > i * 3000) lemmings[i].render();
 	}
-	//toolbar.render();
+	toolbar.render();
 
 
 
