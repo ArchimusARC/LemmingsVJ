@@ -42,8 +42,8 @@ void SceneLevel3::init()
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
-	red_door.init(glm::vec2(65, 10), simpleTexProgram);
-	goal.init(glm::vec2(222, 105), simpleTexProgram, displ);
+	red_door.init(glm::vec2(65, 8), simpleTexProgram);
+	goal.init(glm::vec2(800, 55), simpleTexProgram, displ);
 	lemmingsInitiated = 0;
 	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, displ);
 	livingLemmings = 10;

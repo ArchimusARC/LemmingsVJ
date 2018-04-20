@@ -40,7 +40,7 @@ bool Game::update(int deltaTime)
 		break;
 
 	case WIN_LEVEL:
-		//sceneWin.update(deltaTime);
+		sceneWin.update(deltaTime);
 		break;
 
 	case FAIL_LEVEL:
@@ -86,7 +86,7 @@ void Game::render()
 		break;
 
 	case WIN_LEVEL:
-		//sceneWin.render();
+		sceneWin.render();
 		break;
 
 	case FAIL_LEVEL:
@@ -235,6 +235,7 @@ void Game::mouseMove(int x, int y)
 		break;
 
 	case WIN_LEVEL:
+		sceneWin.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 		break;
 
 	case FAIL_LEVEL:

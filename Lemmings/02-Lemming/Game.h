@@ -8,6 +8,7 @@
 #include "SceneControls.h"
 #include "SceneLevel2.h"
 #include "SceneLevel3.h"
+#include "SceneWin.h"
 #include "../irrKlang-1.6.0/include/irrKlang.h"
 
 
@@ -57,6 +58,7 @@ private:
 	SceneControls sceneControls;
 	SceneLevel2 level2;
 	SceneLevel3 level3;
+	SceneWin sceneWin;
 	Scenes current_scene;
 	int current_level;
 	irrklang::ISoundEngine* engine;
