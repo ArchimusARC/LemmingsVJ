@@ -634,6 +634,10 @@ bool Lemming::buildFinished() {
 	else return false;
 }
 
+void Lemming::displacement(int displ2) {
+	sprite->position() -= glm::vec2(displ2, 0);
+}
+
 
 
 

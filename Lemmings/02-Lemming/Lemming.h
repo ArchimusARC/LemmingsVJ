@@ -24,6 +24,7 @@ public:
 	void give(int alt);
 	bool inTheBox(int x, int y);
 	int report();
+	void displacement(int displ2);
 	
 private:
 	float LemmingAnimations = 8.0f;//Modificar cada cop que s'afegeixi una animació

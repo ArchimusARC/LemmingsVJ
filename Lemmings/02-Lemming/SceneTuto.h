@@ -43,6 +43,7 @@ private:
 	int lemmingsInitiated;
 	bool accel;
 	bool pause;
+	bool inicialited = false;
 	glm::mat4 projection;
 	Lemming lemmings[10];
 	int livingLemmings;

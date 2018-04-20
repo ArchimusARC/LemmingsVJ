@@ -20,6 +20,7 @@ public:
 
 	void setMapMask(VariableTexture *mapMask);
 	glm::ivec2 position();
+	void displacement(int displ2);
 
 private:
 

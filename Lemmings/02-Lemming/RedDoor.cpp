@@ -53,4 +53,8 @@ bool RedDoor::opened() {
 	return (opener < 25);
 }
 
+void RedDoor::displacement(int displ2) {
+	sprite->position() -= glm::vec2(displ2, 0);
+}
+
 

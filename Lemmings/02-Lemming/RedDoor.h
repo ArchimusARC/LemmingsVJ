@@ -21,6 +21,7 @@ public:
 
 	void setMapMask(VariableTexture *mapMask);
 	bool opened();
+	void displacement(int displ2);
 
 private:
 

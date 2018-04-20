@@ -56,6 +56,7 @@ void SceneTuto::init()
 
 	engine = irrklang::createIrrKlangDevice();
 	engine->play2D("cowboys.wav", true);
+	inicialited = true;
 }
 
 void SceneTuto::update(int deltaTime)
@@ -121,6 +122,33 @@ void SceneTuto::render()
 
 void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
 {
+	if (mouseX > 940 && mouseX < 960 && displ < 200 && inicialited) {
+		map->free();
+		displ = displ + 10;
+		glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(float(CAMERA_WIDTH), float(CAMERA_HEIGHT)) };
+		glm::vec2 texCoords[2] = { glm::vec2(float(displ) / 512.0f, 0.f), glm::vec2((float(displ) + 320.0f) / 512.0f, 160.f / 256.0f) };
+		map = MaskedTexturedQuad::createTexturedQuad(geom, texCoords, maskedTexProgram);
+		red_door.displacement(10);
+		goal.displacement(10);
+		for (int i = 0; i < lemmingsInitiated; ++i) {
+			lemmings[i].displacement(10);
+		}
+
+	}
+	if (mouseX > 0 && mouseX < 20 && displ > 100 && inicialited) {
+		map->free();
+		displ = displ - 10;
+		glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(float(CAMERA_WIDTH), float(CAMERA_HEIGHT)) };
+		glm::vec2 texCoords[2] = { glm::vec2(float(displ) / 512.0f, 0.f), glm::vec2((float(displ) + 320.0f) / 512.0f, 160.f / 256.0f) };
+		map = MaskedTexturedQuad::createTexturedQuad(geom, texCoords, maskedTexProgram);
+		red_door.displacement(-10);
+		goal.displacement(-10);
+		for (int i = 0; i < lemmingsInitiated; ++i) {
+			lemmings[i].displacement(-10);
+		}
+
+	}
+
 	int posX, posY;
 	if (bLeftButton) {
 		eraseMask(mouseX, mouseY);
