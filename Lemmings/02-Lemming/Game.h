@@ -6,6 +6,7 @@
 #include "SceneTuto.h"
 #include "SceneMenu.h"
 #include "SceneControls.h"
+#include "SceneLevel2.h"
 #include "../irrKlang-1.6.0/include/irrKlang.h"
 
 
@@ -53,6 +54,7 @@ private:
 	SceneTuto sceneTuto;
 	SceneMenu sceneMenu;
 	SceneControls sceneControls;
+	SceneLevel2 level2;
 	Scenes current_scene;
 	int current_level;
 	irrklang::ISoundEngine* engine;

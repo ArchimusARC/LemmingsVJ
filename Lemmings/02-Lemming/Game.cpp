@@ -28,7 +28,7 @@ bool Game::update(int deltaTime)
 		break;
 
 	case LEVEL2:
-		//sceneLevel2.update(deltaTime);
+		level2.update(deltaTime);
 		break;
 
 	case LEVEL3:
@@ -74,7 +74,7 @@ void Game::render()
 		break;
 
 	case LEVEL2:
-		//sceneLevel2.render();
+		level2.render();
 		break;
 
 	case LEVEL3:
@@ -117,6 +117,8 @@ void Game::keyPressed(int key)
 		if (key == 50) {			//2 code
 			current_level = 2;
 			current_scene = LEVEL2;
+			engine->drop();
+			level2.init();
 		}
 		if (key == 51) {			//3 code
 			current_level = 3;
