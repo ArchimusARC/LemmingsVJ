@@ -6,6 +6,7 @@
 #include "SceneTuto.h"
 #include "SceneMenu.h"
 #include "SceneControls.h"
+#include "../irrKlang-1.6.0/include/irrKlang.h"
 
 
 
@@ -54,6 +55,7 @@ private:
 	SceneControls sceneControls;
 	Scenes current_scene;
 	int current_level;
+	irrklang::ISoundEngine* engine;
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	                                  // we can have access at any time
 	int mouseX, mouseY;               // Mouse position

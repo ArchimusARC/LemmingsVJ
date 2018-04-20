@@ -29,7 +29,7 @@ void SceneTuto::init()
 	initShaders();
 
 	map = MaskedTexturedQuad::createTexturedQuad(geom, texCoords, maskedTexProgram);
-	colorTexture.loadFromFile("images/fun1.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	colorTexture.loadFromFile("images/fun1_hell.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	colorTexture.setMinFilter(GL_NEAREST);
 	colorTexture.setMagFilter(GL_NEAREST);
 	colorTexturePintar.loadFromFile("images/texturadefons2.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -123,8 +123,8 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
 			if (lemmings[i].inTheBox(posX, posY))
-				//lemmings[i].give(1); //DIGGER
-				lemmings[i].give(1); //BLOCKER
+				lemmings[i].give(1); //DIGGER
+				//lemmings[i].give(1); //BLOCKER
 
 		}
 	}

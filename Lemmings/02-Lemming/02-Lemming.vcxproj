@@ -16,12 +16,13 @@
     <ClInclude Include="EndDoor.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Lemming.h" />
-	<ClInclude Include="Barra.h" />
+    <ClInclude Include="Barra.h" />
     <ClInclude Include="MaskedTexturedQuad.h" />
     <ClInclude Include="RedDoor.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneControls.h" />
     <ClInclude Include="SceneTuto.h" />
-	<ClInclude Include="SceneMenu.h" />
+    <ClInclude Include="SceneMenu.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Sprite.h" />
@@ -32,13 +33,14 @@
     <ClCompile Include="EndDoor.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Lemming.cpp" />
-	<ClCompile Include="Barra.cpp" />
+    <ClCompile Include="Barra.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaskedTexturedQuad.cpp" />
     <ClCompile Include="RedDoor.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneControls.cpp" />
     <ClCompile Include="SceneTuto.cpp" />
-	<ClCompile Include="SceneMenu.cpp" />
+    <ClCompile Include="SceneMenu.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -88,12 +90,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\libs\freeglut\include;..\..\libs\glew-1.13.0\include;..\..\libs\glm;..\..\libs\Simple OpenGL Image Library\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\libs\irrKlang-1.6.0\include;..\..\libs\freeglut\include;..\..\libs\glew-1.13.0\include;..\..\libs\glm;..\..\libs\Simple OpenGL Image Library\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\libs\freeglut\lib;..\..\libs\glew-1.13.0\lib\Release\Win32;..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\libs\irrKlang-1.6.0\lib;..\..\libs\freeglut\lib;..\..\libs\glew-1.13.0\lib\Release\Win32;..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>freeglut.lib;glew32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

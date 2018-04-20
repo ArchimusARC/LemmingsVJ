@@ -2,13 +2,17 @@
 #include <GL/glut.h>
 #include "Game.h"
 
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
+
 
 void Game::init()
 {
 	bPlay = true;
 	bLeftMouse = bRightMouse = false;
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	current_scene = MENU;
+	engine = irrklang::createIrrKlangDevice();
+	engine->play2D("/sounds/highway_to_hell.wav", true);
 	sceneMenu.init();
 }
 
