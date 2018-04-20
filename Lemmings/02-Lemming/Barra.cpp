@@ -17,7 +17,7 @@ void Barra::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram)
 	spritesheet.loadFromFile("images/toolbar/toolbarfull.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMinFilter(GL_NEAREST);
 	spritesheet.setMagFilter(GL_NEAREST);
-	sprite = Sprite::createSprite(glm::ivec2(144.0,18), glm::vec2(1.0, 1.0), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(144.0,18.0), glm::vec2(1.0, 1.0), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 	
 		sprite->setAnimationSpeed(NONE, 12);
