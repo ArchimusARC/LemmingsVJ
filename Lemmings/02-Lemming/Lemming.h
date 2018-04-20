@@ -36,6 +36,7 @@ private:
 	bool iSync();
 	bool iDoRender();
 	bool iDoNotUpdate();
+	bool buildFinished();
 	
 	void setAnimations(ShaderProgram &shaderProgram);
 	
@@ -50,7 +51,7 @@ private:
 	{
 		NONE, DIGGER, CLIMBER, BASHER, PARACHUTE, BLOCKER, BUILDER, WINNER, EXPLODE	
 	};
-	int displ;
+	int displ, build;
 	LemmingState state;
 	AltState given;
 	Texture spritesheet;

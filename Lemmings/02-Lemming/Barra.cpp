@@ -14,10 +14,10 @@
 void Barra::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgram)
 {
 	state = NONE;
-	spritesheet.loadFromFile("images/toolbar/toolbarfull.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/toolbar/basher.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMinFilter(GL_NEAREST);
 	spritesheet.setMagFilter(GL_NEAREST);
-	sprite = Sprite::createSprite(glm::ivec2(596, 74), glm::vec2(0.0, 0.0), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(52.0,74.0), glm::vec2(0.0, 0.0), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 	
 		sprite->setAnimationSpeed(NONE, 12);

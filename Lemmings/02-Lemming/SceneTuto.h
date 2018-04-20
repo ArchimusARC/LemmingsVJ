@@ -46,6 +46,7 @@ private:
 	Lemming lemmings[10];
 	int livingLemmings;
 	int victoriousLemmings;
+	int displ;
 	RedDoor red_door;
 	EndDoor goal;
 	Barra toolbar;
