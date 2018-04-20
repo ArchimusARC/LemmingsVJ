@@ -638,6 +638,11 @@ void Lemming::displacement(int displ2) {
 	sprite->position() -= glm::vec2(displ2, 0);
 }
 
+void Lemming::setDisplacement(int displacement)
+{
+	displ = displacement;
+}
+
 
 
 

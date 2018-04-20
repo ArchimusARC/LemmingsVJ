@@ -131,6 +131,7 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 		red_door.displacement(10);
 		goal.displacement(10);
 		for (int i = 0; i < lemmingsInitiated; ++i) {
+			lemmings[i].setDisplacement(displ);
 			lemmings[i].displacement(10);
 		}
 
@@ -144,6 +145,7 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 		red_door.displacement(-10);
 		goal.displacement(-10);
 		for (int i = 0; i < lemmingsInitiated; ++i) {
+			lemmings[i].setDisplacement(displ);
 			lemmings[i].displacement(-10);
 		}
 

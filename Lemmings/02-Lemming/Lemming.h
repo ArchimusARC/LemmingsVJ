@@ -25,6 +25,7 @@ public:
 	bool inTheBox(int x, int y);
 	int report();
 	void displacement(int displ2);
+	void setDisplacement(int displacement);
 	
 private:
 	float LemmingAnimations = 8.0f;//Modificar cada cop que s'afegeixi una animació
