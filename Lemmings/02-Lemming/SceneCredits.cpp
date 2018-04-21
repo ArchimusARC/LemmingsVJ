@@ -34,7 +34,7 @@ void SceneCredits::init()
 	maskTexture.setMinFilter(GL_NEAREST);
 	maskTexture.setMagFilter(GL_NEAREST);
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("sounds/champion.wav", true);
+	engine->play2D("sounds/champions.wav", true);
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;

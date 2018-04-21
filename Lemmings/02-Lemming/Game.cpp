@@ -12,7 +12,6 @@ void Game::init()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	current_scene = MENU;
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("sounds/highway.wav", true);
 	sceneMenu.init();
 }
 
@@ -65,6 +64,7 @@ bool Game::update(int deltaTime)
 			credits.init();
 		}
 		else if (i == -1) {
+			level3.engine->drop();
 			current_scene = FAIL_LEVEL;
 			sceneFail.init();
 		}
@@ -146,25 +146,25 @@ void Game::keyPressed(int key)
 		if (key == 48 || key == 49) { //0 and 1 code
 			current_level = 1;
 			current_scene = LEVEL1;
-			engine->drop();
+			sceneMenu.engine->drop();
 			sceneTuto.init();
 		}
 		if (key == 50) {			//2 code
 			current_level = 2;
 			current_scene = LEVEL2;
-			engine->drop();
+			sceneMenu.engine->drop();
 			level2.init();
 		}
 		if (key == 51) {			//3 code
 			current_level = 3;
 			current_scene = LEVEL3;
-			engine->drop();
+			sceneMenu.engine->drop();
 			level3.init();
 		}
 		if (key == 52) {			//4 code
 			
 			current_scene = CREDITS;
-			engine->drop();
+			sceneMenu.engine->drop();
 			credits.init();
 		}
 		if (key == 99) {			//c code
@@ -207,17 +207,17 @@ void Game::keyPressed(int key)
 		if (key == 114) { //R code
 			if (current_level == 1) {
 				current_scene = LEVEL1;
-				engine->drop();
+				level3.init();
 				sceneTuto.init();
 			}
 			else if (current_level == 2) {
 				current_scene = LEVEL2;
-				engine->drop();
+				sceneTuto.init();
 				level2.init();
 			}
 			else if (current_level == 3) {
 				current_scene = LEVEL3;
-				engine->drop();
+				level2.init();
 				level3.init();
 			}
 		}

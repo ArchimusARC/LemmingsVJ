@@ -22,9 +22,8 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	
 	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
-
+	irrklang::ISoundEngine* engine;
 private:
 	void initShaders();
 

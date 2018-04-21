@@ -77,8 +77,8 @@ void SceneLevel3::update(int deltaTime)
 			lemmings[i].update(deltaTime);
 
 			int j = lemmings[i].report();
-			if (j == -1) livingLemmings -= 1;
-			else if (j == 1) victoriousLemmings += 1;
+			if (j == -1) livLemmings -= 1;
+			else if (j == 1) vicLemmings += 1;
 		}
 	}
 	if (livLemmings < livingLemmings) livingLemmings = livLemmings;
@@ -168,7 +168,6 @@ void SceneLevel3::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRig
 
 	int posX, posY;
 	if (bLeftButton) {
-		eraseMask(mouseX, mouseY);
 		for (int i = 0; i < 10; ++i) {
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
@@ -177,8 +176,7 @@ void SceneLevel3::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRig
 
 		}
 	}
-	else if (bRightButton)
-		applyMask(mouseX, mouseY);
+	else if (bRightButton);
 }
 
 void SceneLevel3::eraseMask(int mouseX, int mouseY)

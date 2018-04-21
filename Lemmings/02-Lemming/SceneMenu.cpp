@@ -34,6 +34,8 @@ void SceneMenu::init()
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
+	engine = irrklang::createIrrKlangDevice();
+	engine->play2D("sounds/highway.wav", true);
 }
 
 
@@ -64,6 +66,7 @@ void SceneMenu::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 {
 	
 }
+
 
 
 void SceneMenu::initShaders()
