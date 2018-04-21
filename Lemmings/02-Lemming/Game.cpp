@@ -48,7 +48,7 @@ bool Game::update(int deltaTime)
 		break;
 
 	case CREDITS:
-		//sceneCredits.update(deltaTime);
+		credits.update(deltaTime);
 		break;
 
 	default:
@@ -94,7 +94,7 @@ void Game::render()
 		break;
 
 	case CREDITS:
-		//sceneCredits.render();
+		credits.render();
 		break;
 	default:
 		break;
@@ -243,6 +243,7 @@ void Game::mouseMove(int x, int y)
 		break;
 
 	case CREDITS:
+		credits.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 		break;
 	default:
 		break;

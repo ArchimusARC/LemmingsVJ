@@ -10,6 +10,7 @@
 #include "SceneLevel3.h"
 #include "SceneWin.h"
 #include "SceneFail.h"
+#include "SceneCredits.h"
 #include "../irrKlang-1.6.0/include/irrKlang.h"
 
 
@@ -61,6 +62,7 @@ private:
 	SceneLevel3 level3;
 	SceneWin sceneWin;
 	SceneFail sceneFail;
+	SceneCredits credits;
 	Scenes current_scene;
 	int current_level;
 	irrklang::ISoundEngine* engine;
