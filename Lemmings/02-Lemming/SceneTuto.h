@@ -25,7 +25,8 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	
+	int report();
+	void setPower(int power);
 	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
 
 private:

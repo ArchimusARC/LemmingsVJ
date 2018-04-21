@@ -43,10 +43,10 @@ void SceneLevel2::init()
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 	red_door.init(glm::vec2(75, 5), simpleTexProgram);
-	goal.init(glm::vec2(765, 109), simpleTexProgram, displ);
+	goal.init(glm::vec2(765, 110), simpleTexProgram, displ);
 	lemmingsInitiated = 0;
 	lemmings[lemmingsInitiated].init(glm::vec2(95, 21), simpleTexProgram, displ);
-	livingLemmings = 10;
+	livingLemmings = 1;
 	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
@@ -61,6 +61,8 @@ void SceneLevel2::init()
 
 void SceneLevel2::update(int deltaTime)
 {
+	int livLemmings = 10;
+	int vicLemmings = 0;
 	if (pause) deltaTime = 0;
 	else if (accel) deltaTime = deltaTime * 2;
 	currentTime += deltaTime;
@@ -79,6 +81,8 @@ void SceneLevel2::update(int deltaTime)
 			else if (j == 1) victoriousLemmings += 1;
 		}
 	}
+	if (livLemmings < livingLemmings) livingLemmings = livLemmings;
+	if (vicLemmings > victoriousLemmings) victoriousLemmings = vicLemmings;
 	if (red_door.opened())red_door.update(deltaTime);
 	goal.update(deltaTime);
 	
@@ -88,6 +92,7 @@ void SceneLevel2::initiateNextLemming() {
 	lemmings[lemmingsInitiated].init(glm::vec2(95, 21), simpleTexProgram, displ);
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
+	++livingLemmings;
 }
 
 void SceneLevel2::render()
@@ -158,17 +163,23 @@ void SceneLevel2::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRig
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
 			if (lemmings[i].inTheBox(posX, posY))
-				//lemmings[i].give(1); //DIGGER
-				//lemmings[i].give(2); //CLIMBER
-				//lemmings[i].give(3); //BASHER
-				lemmings[i].give(4); //PARACHUTE
-				//lemmings[i].give(5); //BLOCKER
-				//lemmings[i].give(6); //BUILDER
+				lemmings[i].give(selectedPower);
 
 		}
 	}
 	else if (bRightButton)
 		applyMask(mouseX, mouseY);
+}
+
+void SceneLevel2::setPower(int power) {
+	if (power == 9) accel = !accel;
+	else if (power == 10) pause = !pause;
+	else if (power == 11) {
+		for (int i = 0; i < lemmingsInitiated; ++i) {
+			lemmings[i].give(8);
+		}
+	}
+	else selectedPower = power;
 }
 
 void SceneLevel2::eraseMask(int mouseX, int mouseY)
@@ -201,6 +212,12 @@ void SceneLevel2::applyMask(int mouseX, int mouseY)
 			if (sqrt(pow(x - posX, 2) + pow(y - posY, 2)) < 4) maskTexture.setPixel(x, y, 255);
 		}
 	}
+}
+
+int SceneLevel2::report() {
+	if (victoriousLemmings == 5) return 1;
+	else if (livingLemmings == 0 && lemmingsInitiated == 10) return -1;
+	else return 0;
 }
 
 void SceneLevel2::initShaders()

@@ -18,6 +18,7 @@ void Game::init()
 
 bool Game::update(int deltaTime)
 {
+	int i;
 	switch (current_scene) {
 	case MENU:
 		sceneMenu.update(deltaTime);
@@ -25,14 +26,35 @@ bool Game::update(int deltaTime)
 
 	case LEVEL1:
 		sceneTuto.update(deltaTime);
+		i = sceneTuto.report();
+		if (i == 1) {
+			sceneWin.init();
+		}
+		else if (i == -1) {
+			sceneFail.init();
+		}
 		break;
 
 	case LEVEL2:
 		level2.update(deltaTime);
+		i = level2.report();
+		if (i == 1) {
+			sceneWin.init();
+		}
+		else if (i == -1) {
+			sceneFail.init();
+		}
 		break;
 
 	case LEVEL3:
 		level3.update(deltaTime);
+		i = level3.report();
+		if (i == 1) {
+			sceneWin.init();
+		}
+		else if (i == -1) {
+			sceneFail.init();
+		}
 		break;
 
 	case CONTROLS:
@@ -185,6 +207,42 @@ void Game::keyPressed(int key)
 			current_scene = MENU;
 			sceneMenu.init();
 		}
+		break;
+	case LEVEL1:
+		if (key == 67) sceneTuto.setPower(2);
+		else if (key == 85) sceneTuto.setPower(4);
+		else if (key == 69) sceneTuto.setPower(8);
+		else if (key == 83) sceneTuto.setPower(5);
+		else if (key == 75) sceneTuto.setPower(6);
+		else if (key == 66) sceneTuto.setPower(3);
+		else if (key == 68) sceneTuto.setPower(1);
+		else if (key == 70) sceneTuto.setPower(9);
+		else if (key == 80) sceneTuto.setPower(10);
+		else if (key == 82) sceneTuto.setPower(11);
+		break;
+	case LEVEL2:
+		if (key == 67) level2.setPower(2);
+		else if (key == 85) level2.setPower(4);
+		else if (key == 69) level2.setPower(8);
+		else if (key == 83) level2.setPower(5);
+		else if (key == 75) level2.setPower(6);
+		else if (key == 66) level2.setPower(3);
+		else if (key == 68) level2.setPower(1);
+		else if (key == 70) level2.setPower(9);
+		else if (key == 80) level2.setPower(10);
+		else if (key == 82) level2.setPower(11);
+		break;
+	case LEVEL3:
+		if (key == 67) level3.setPower(2);
+		else if (key == 85) level3.setPower(4);
+		else if (key == 69) level3.setPower(8);
+		else if (key == 83) level3.setPower(5);
+		else if (key == 75) level3.setPower(6);
+		else if (key == 66) level3.setPower(3);
+		else if (key == 68) level3.setPower(1);
+		else if (key == 70) level3.setPower(9);
+		else if (key == 80) level3.setPower(10);
+		else if (key == 82) level3.setPower(11);
 		break;
 	default:
 		break;

@@ -21,8 +21,13 @@
     <ClInclude Include="RedDoor.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneControls.h" />
+    <ClInclude Include="SceneCredits.h" />
+    <ClInclude Include="SceneFail.h" />
+    <ClInclude Include="SceneLevel2.h" />
+    <ClInclude Include="SceneLevel3.h" />
     <ClInclude Include="SceneTuto.h" />
     <ClInclude Include="SceneMenu.h" />
+    <ClInclude Include="SceneWin.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Sprite.h" />
@@ -39,8 +44,13 @@
     <ClCompile Include="RedDoor.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneControls.cpp" />
+    <ClCompile Include="SceneCredits.cpp" />
+    <ClCompile Include="SceneFail.cpp" />
+    <ClCompile Include="SceneLevel2.cpp" />
+    <ClCompile Include="SceneLevel3.cpp" />
     <ClCompile Include="SceneTuto.cpp" />
     <ClCompile Include="SceneMenu.cpp" />
+    <ClCompile Include="SceneWin.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sprite.cpp" />

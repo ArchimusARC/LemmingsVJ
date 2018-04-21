@@ -46,7 +46,7 @@ void SceneLevel3::init()
 	goal.init(glm::vec2(800, 55), simpleTexProgram, displ);
 	lemmingsInitiated = 0;
 	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, displ);
-	livingLemmings = 10;
+	livingLemmings = 1;
 	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
@@ -61,6 +61,8 @@ void SceneLevel3::init()
 
 void SceneLevel3::update(int deltaTime)
 {
+	int livLemmings = 10;
+	int vicLemmings = 0;
 	if (pause) deltaTime = 0;
 	else if (accel) deltaTime = deltaTime * 2;
 	currentTime += deltaTime;
@@ -79,14 +81,28 @@ void SceneLevel3::update(int deltaTime)
 			else if (j == 1) victoriousLemmings += 1;
 		}
 	}
+	if (livLemmings < livingLemmings) livingLemmings = livLemmings;
+	if (vicLemmings > victoriousLemmings) victoriousLemmings = vicLemmings;
 	if (red_door.opened())red_door.update(deltaTime);
 	goal.update(deltaTime);
+}
+
+void SceneLevel3::setPower(int power) {
+	if (power == 9) accel = !accel;
+	else if (power == 10) pause = !pause;
+	else if (power == 11) {
+		for (int i = 0; i < lemmingsInitiated; ++i) {
+			lemmings[i].give(8);
+		}
+	}
+	else selectedPower = power;
 }
 
 void SceneLevel3::initiateNextLemming() {
 	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, displ);
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
+	++livingLemmings;
 }
 
 void SceneLevel3::render()
@@ -157,12 +173,7 @@ void SceneLevel3::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRig
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
 			if (lemmings[i].inTheBox(posX, posY))
-				//lemmings[i].give(1); //DIGGER
-				//lemmings[i].give(2); //CLIMBER
-				//lemmings[i].give(3); //BASHER
-				lemmings[i].give(4); //PARACHUTE
-									 //lemmings[i].give(5); //BLOCKER
-									 //lemmings[i].give(6); //BUILDER
+				lemmings[i].give(selectedPower);
 
 		}
 	}
@@ -200,6 +211,12 @@ void SceneLevel3::applyMask(int mouseX, int mouseY)
 			if (sqrt(pow(x - posX, 2) + pow(y - posY, 2)) < 4) maskTexture.setPixel(x, y, 255);
 		}
 	}
+}
+
+int SceneLevel3::report() {
+	if (victoriousLemmings == 5) return 1;
+	else if (livingLemmings == 0 && lemmingsInitiated == 10) return -1;
+	else return 0;
 }
 
 void SceneLevel3::initShaders()

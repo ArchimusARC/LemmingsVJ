@@ -46,7 +46,7 @@ void SceneTuto::init()
 	goal.init(glm::vec2(222, 105), simpleTexProgram, displ);
 	lemmingsInitiated = 0;
 	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, displ);
-	livingLemmings = 10;
+	livingLemmings = 1;
 	victoriousLemmings = 0;
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
@@ -61,6 +61,8 @@ void SceneTuto::init()
 
 void SceneTuto::update(int deltaTime)
 {
+	int livLemmings = 10;
+	int vicLemmings = 0;
 	if (pause) deltaTime = 0;
 	else if (accel) deltaTime = deltaTime * 2;
 	currentTime += deltaTime;
@@ -75,19 +77,33 @@ void SceneTuto::update(int deltaTime)
 			lemmings[i].update(deltaTime);
 
 			int j = lemmings[i].report();
-			if (j == -1) livingLemmings -= 1;
-			else if (j == 1) victoriousLemmings += 1;
+			if (j == -1) livLemmings -= 1;
+			else if (j == 1) vicLemmings += 1;
 		}
 	}
+	if (livLemmings < livingLemmings) livingLemmings = livLemmings;
+	if (vicLemmings > victoriousLemmings) victoriousLemmings = vicLemmings;
 	if(red_door.opened())red_door.update(deltaTime);
 	goal.update(deltaTime);
 	
+}
+
+void SceneTuto::setPower(int power) {
+	if (power == 9) accel = !accel;
+	else if (power == 10) pause = !pause;
+	else if (power == 11) {
+		for (int i = 0; i < lemmingsInitiated; ++i) {
+			lemmings[i].give(8);
+		}
+	}
+	else selectedPower = power;
 }
 
 void SceneTuto::initiateNextLemming() {
 	lemmings[lemmingsInitiated].init(glm::vec2(82, 26), simpleTexProgram, displ);
 	lemmings[lemmingsInitiated].setMapMask(&maskTexture);
 	++lemmingsInitiated;
+	++livingLemmings;
 }
 
 void SceneTuto::render()
@@ -155,7 +171,6 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 	if (bLeftButton) {
 		int j = toolbar.checkState(mouseX, mouseY);
 		if (j < 11 && j >= 0) selectedPower = j;
-		eraseMask(mouseX, mouseY);
 		for (int i = 0; i < 10; ++i) {
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
@@ -164,8 +179,7 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 
 		}
 	}
-	else if (bRightButton)
-		applyMask(mouseX, mouseY);
+	else if (bRightButton);
 }
 
 void SceneTuto::eraseMask(int mouseX, int mouseY)
@@ -198,6 +212,12 @@ void SceneTuto::applyMask(int mouseX, int mouseY)
 			if (sqrt(pow(x - posX, 2) + pow(y - posY, 2)) < 4) maskTexture.setPixel(x, y, 255);
 		}
 	}
+}
+
+int SceneTuto::report() {
+	if (victoriousLemmings == 5) return 1;
+	else if (livingLemmings == 0 && lemmingsInitiated == 10) return -1;
+	else return 0;
 }
 
 void SceneTuto::initShaders()

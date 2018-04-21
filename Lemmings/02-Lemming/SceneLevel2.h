@@ -25,7 +25,8 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-
+	int report();
+	void setPower(int power);
 	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
 
 private:
@@ -49,6 +50,7 @@ private:
 	int livingLemmings;
 	int victoriousLemmings;
 	int displ;
+	int selectedPower;
 	RedDoor red_door;
 	EndDoor goal;
 	Barra toolbar;
