@@ -28,7 +28,6 @@ void SceneTuto::init()
 	glm::vec2 texCoords[2] = { glm::vec2(float(displ)/512.0f, 0.f), glm::vec2((float(displ)+ 320.0f) /512.0f, 160.f / 256.0f) };
 
 	initShaders();
-
 	map = MaskedTexturedQuad::createTexturedQuad(geom, texCoords, maskedTexProgram);
 	colorTexture.loadFromFile("images/fun1_hell.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	colorTexture.setMinFilter(GL_NEAREST);
@@ -169,13 +168,12 @@ void SceneTuto::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRight
 
 	int posX, posY;
 	if (bLeftButton) {
-		int j = toolbar.checkState(mouseX, mouseY);
-		if (j < 11 && j >= 0) selectedPower = j;
 		for (int i = 0; i < 10; ++i) {
 			posX = mouseX / 3 + displ;
 			posY = mouseY / 3;
-			if (lemmings[i].inTheBox(posX, posY))
+			if (lemmings[i].inTheBox(posX, posY)) {
 				lemmings[i].give(selectedPower);
+			}
 
 		}
 	}
