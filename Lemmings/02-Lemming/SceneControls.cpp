@@ -36,7 +36,7 @@ void SceneControls::init()
 	currentTime = 0.0f;
 }
 
-unsigned int x = 0;
+
 
 void SceneControls::update(int deltaTime)
 {

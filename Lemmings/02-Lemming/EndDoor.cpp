@@ -25,7 +25,7 @@ void EndDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 		sprite->addKeyframe(DOOR, glm::vec2(float(i) / 6, 0.0f));
 
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("fire.wav", true);
+	engine->play2D("sounds/fire.wav", true);
 	sprite->changeAnimation(DOOR);
 	sprite->setPosition(initialPosition);
 	displ = mapDispl;

@@ -36,7 +36,6 @@ void SceneWin::init()
 	currentTime = 0.0f;
 }
 
-unsigned int x = 0;
 
 void SceneWin::update(int deltaTime)
 {

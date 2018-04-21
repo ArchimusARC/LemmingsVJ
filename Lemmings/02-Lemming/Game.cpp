@@ -12,7 +12,7 @@ void Game::init()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	current_scene = MENU;
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("highway.wav", true);
+	engine->play2D("sounds/highway.wav", true);
 	sceneMenu.init();
 }
 
@@ -44,7 +44,7 @@ bool Game::update(int deltaTime)
 		break;
 
 	case FAIL_LEVEL:
-		//sceneFail.update(deltaTime);
+		sceneFail.update(deltaTime);
 		break;
 
 	case CREDITS:
@@ -90,7 +90,7 @@ void Game::render()
 		break;
 
 	case FAIL_LEVEL:
-		//sceneFail.render();
+		sceneFail.render();
 		break;
 
 	case CREDITS:
@@ -239,6 +239,7 @@ void Game::mouseMove(int x, int y)
 		break;
 
 	case FAIL_LEVEL:
+		sceneFail.mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 		break;
 
 	case CREDITS:

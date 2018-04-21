@@ -41,13 +41,13 @@ void Lemming::update(int deltaTime)
 	if (sprite->update(deltaTime) == 0) return;
 	if (iSync()) return;
 	if (given == WINNER && state != VICTORIOUS) {
-		engine->play2D("coin.wav", false);
+		engine->play2D("sounds/coin.wav", false);
 		sprite->changeAnimation(ENDWALK);
 		state = VICTORIOUS;
 	}
 	else if (given == EXPLODE) {
 		state = EXPLODING;
-		engine->play2D("explode.wav", false);
+		engine->play2D("sounds/explode.wav", false);
 		//sprite->changeAnimation(EXPLODE);
 	}
 	else if (given == BLOCKER && (state != FALLING_LEFT_STATE || state != FALLING_RIGHT_STATE) && state != BLOCKING) {
@@ -78,12 +78,12 @@ void Lemming::update(int deltaTime)
 			sprite->position() += glm::vec2(0, fall);
 			fallDistance += fall;
 			if (given == PARACHUTE && sprite->animation() != PARACHUTE_LEFT) {
-				engine->play2D("pop.wav", false);
+				engine->play2D("sounds/pop.wav", false);
 				sprite->changeAnimation(PARACHUTE_LEFT);
 			}	
 			actualPos = sprite->position();
 			if (actualPos.y + fall >= 170) {
-				engine->play2D("roblox_death.wav", false);
+				engine->play2D("sounds/roblox_death.wav", false);
 				sprite->changeAnimation(DEATH);
 				state = DEAD;
 				
@@ -94,7 +94,7 @@ void Lemming::update(int deltaTime)
 			state = WALKING_LEFT_STATE;
 			if (fallDistance + fall > 50 && given != PARACHUTE) {
 				sprite->changeAnimation(DEATH);
-				engine->play2D("roblox_death.wav", false);
+				engine->play2D("sounds/roblox_death.wav", false);
 				state = DEAD;
 				
 			}
@@ -107,13 +107,13 @@ void Lemming::update(int deltaTime)
 			sprite->position() += glm::vec2(0, fall);
 			fallDistance += fall;
 			if (given == PARACHUTE && sprite->animation() != PARACHUTE_RIGHT) {
-				engine->play2D("pop.wav", false);
+				engine->play2D("sounds/pop.wav", false);
 				sprite->changeAnimation(PARACHUTE_RIGHT);
 			}
 			actualPos = sprite->position();
 			if (actualPos.y + fall >= 170) {
 				sprite->changeAnimation(DEATH);
-				engine->play2D("roblox_death.wav", false);
+				engine->play2D("sounds/roblox_death.wav", false);
 				state = DEAD;
 				
 			}
@@ -121,7 +121,7 @@ void Lemming::update(int deltaTime)
 		else {
 			if (fallDistance + fall > 50 && given != PARACHUTE) {
 				sprite->changeAnimation(DEATH);
-				engine->play2D("roblox_death.wav", false);
+				engine->play2D("sounds/roblox_death.wav", false);
 				state = DEAD;
 				
 			}
@@ -207,7 +207,7 @@ void Lemming::update(int deltaTime)
 		if (col) {
 			for (int i = 0; i < 5; ++i) {
 				mask->setPixel(actualPos.x + i - 2, actualPos.y + 1, 0);
-				engine->play2D("dig.wav", false);
+				engine->play2D("sounds/dig.wav", false);
 			}
 		}
 		fall = collisionFloor(3);
@@ -241,7 +241,7 @@ void Lemming::update(int deltaTime)
 			actualPos = sprite->position() + glm::vec2(displ, 0);//position + map displacement
 			actualPos += glm::ivec2(7, 15);//sprite displacement
 			for (int i = 0; i < 10; ++i) {
-				engine->play2D("dig.wav", false);
+				engine->play2D("sounds/dig.wav", false);
 				mask->setPixel(actualPos.x - 1, actualPos.y - i, 0);
 			}
 		}
@@ -265,7 +265,7 @@ void Lemming::update(int deltaTime)
 			actualPos = sprite->position() + glm::vec2(displ, 0);//position + map displacement
 			actualPos += glm::ivec2(7, 15);//sprite displacement
 			for (int i = 0; i < 10; ++i) {
-				engine->play2D("dig.wav", false);
+				engine->play2D("sounds/dig.wav", false);
 				mask->setPixel(actualPos.x + 2, actualPos.y - i, 0);
 			}
 		}
@@ -302,7 +302,7 @@ void Lemming::update(int deltaTime)
 		actualPos += glm::ivec2(7, 15);//sprite displacement
 		if (!stairCollision() && !buildFinished()) {
 			for (int i = 1; i < 7; ++i) {
-				engine->play2D("build.wav", false);
+				engine->play2D("sounds/build.wav", false);
 				mask->setPixel(actualPos.x - i, actualPos.y, 255);
 			}
 			sprite->position() += glm::vec2(-2, -1);
@@ -318,7 +318,7 @@ void Lemming::update(int deltaTime)
 		actualPos += glm::ivec2(7, 15);//sprite displacement
 		if (!stairCollision() && !buildFinished()) {
 			for (int i = 2; i < 8; ++i) {
-				engine->play2D("build.wav", false);
+				engine->play2D("sounds/build.wav", false);
 				mask->setPixel(actualPos.x + i, actualPos.y, 255);
 			}
 			sprite->position() += glm::vec2(2, -1);

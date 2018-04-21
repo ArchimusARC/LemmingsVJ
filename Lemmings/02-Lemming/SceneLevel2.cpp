@@ -55,7 +55,7 @@ void SceneLevel2::init()
 	pause = false;
 
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("bell_tolls.wav", true);
+	engine->play2D("sounds/bell_tolls.wav", true);
 	inicialited = true;
 }
 

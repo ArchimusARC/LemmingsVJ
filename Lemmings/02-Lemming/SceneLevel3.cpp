@@ -55,7 +55,7 @@ void SceneLevel3::init()
 	pause = false;
 
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("orion.wav", true);
+	engine->play2D("sounds/orion.wav", true);
 	inicialited = true;
 }
 

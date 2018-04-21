@@ -55,7 +55,7 @@ void SceneTuto::init()
 	pause = false;
 
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("cowboys.wav", true);
+	engine->play2D("sounds/cowboys.wav", true);
 	inicialited = true;
 }
 

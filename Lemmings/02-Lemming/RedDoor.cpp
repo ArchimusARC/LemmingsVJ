@@ -26,7 +26,7 @@ void RedDoor::init(const glm::vec2 &initialPosition, ShaderProgram &shaderProgra
 
 	opener = 0;
 	engine = irrklang::createIrrKlangDevice();
-	engine->play2D("door.wav", false);
+	engine->play2D("sounds/door.wav", false);
 	sprite->changeAnimation(OPEN_DOOR);
 	sprite->setPosition(initialPosition);
 	
