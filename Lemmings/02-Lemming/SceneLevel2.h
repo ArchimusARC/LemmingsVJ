@@ -28,6 +28,7 @@ public:
 	int report();
 	void setPower(int power);
 	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
+	irrklang::ISoundEngine* engine;
 
 private:
 	void initShaders();
@@ -54,7 +55,7 @@ private:
 	RedDoor red_door;
 	EndDoor goal;
 	Barra toolbar;
-	irrklang::ISoundEngine* engine;
+	
 
 };
 

@@ -36,14 +36,14 @@ void SceneLevel2::init()
 	colorTexturePintar.loadFromFile("images/texturadefons2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	colorTexturePintar.setMinFilter(GL_NEAREST);
 	colorTexturePintar.setMagFilter(GL_NEAREST);
-	maskTexture.loadFromFile("images/level2_mask.png", TEXTURE_PIXEL_FORMAT_L);
+	maskTexture.loadFromFile("images/level2_mask2.png", TEXTURE_PIXEL_FORMAT_L);
 	maskTexture.setMinFilter(GL_NEAREST);
 	maskTexture.setMagFilter(GL_NEAREST);
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 	red_door.init(glm::vec2(75, 5), simpleTexProgram);
-	goal.init(glm::vec2(765, 108), simpleTexProgram, displ);
+	goal.init(glm::vec2(767, 110), simpleTexProgram, displ);
 	lemmingsInitiated = 0;
 	lemmings[lemmingsInitiated].init(glm::vec2(95, 21), simpleTexProgram, displ);
 	livingLemmings = 1;

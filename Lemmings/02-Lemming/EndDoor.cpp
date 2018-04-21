@@ -56,4 +56,5 @@ glm::ivec2 EndDoor::position()
 
 void EndDoor::displacement(int displ2) {
 	sprite->position() -= glm::vec2(displ2, 0);
+	displ += displ2;
 }

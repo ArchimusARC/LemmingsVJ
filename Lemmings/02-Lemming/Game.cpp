@@ -28,9 +28,14 @@ bool Game::update(int deltaTime)
 		sceneTuto.update(deltaTime);
 		i = sceneTuto.report();
 		if (i == 1) {
+			current_level = 2;
+			current_scene = WIN_LEVEL;
+			sceneTuto.engine->drop();
 			sceneWin.init();
 		}
 		else if (i == -1) {
+			current_scene = FAIL_LEVEL;
+			sceneTuto.engine->drop();
 			sceneFail.init();
 		}
 		break;
@@ -39,9 +44,14 @@ bool Game::update(int deltaTime)
 		level2.update(deltaTime);
 		i = level2.report();
 		if (i == 1) {
+			current_level = 3;
+			level2.engine->drop();
+			current_scene = WIN_LEVEL;
 			sceneWin.init();
 		}
 		else if (i == -1) {
+			level2.engine->drop();
+			current_scene = FAIL_LEVEL;
 			sceneFail.init();
 		}
 		break;
@@ -50,9 +60,12 @@ bool Game::update(int deltaTime)
 		level3.update(deltaTime);
 		i = level3.report();
 		if (i == 1) {
-			sceneWin.init();
+			level3.engine->drop();
+			current_scene = CREDITS;
+			credits.init();
 		}
 		else if (i == -1) {
+			current_scene = FAIL_LEVEL;
 			sceneFail.init();
 		}
 		break;
@@ -148,6 +161,12 @@ void Game::keyPressed(int key)
 			engine->drop();
 			level3.init();
 		}
+		if (key == 52) {			//4 code
+			
+			current_scene = CREDITS;
+			engine->drop();
+			credits.init();
+		}
 		if (key == 99) {			//c code
 			current_scene = CONTROLS;
 			sceneControls.init();
@@ -164,16 +183,17 @@ void Game::keyPressed(int key)
 			current_scene = MENU;
 			sceneMenu.init();
 		}
-		if (key == 78) { //N code
-			current_level = current_level + 1;
+		if (key == 110) { //N code
+		
 			if (current_level == 2) {
+				if(current_scene == MENU)engine->drop();
 				current_scene = LEVEL2;
-				engine->drop();
+				
 				level2.init();
 			}
 			else if (current_level == 3) {
 				current_scene = LEVEL3;
-				engine->drop();
+				if(current_scene == MENU) engine->drop();
 				level3.init();
 			}
 		}
@@ -184,7 +204,7 @@ void Game::keyPressed(int key)
 			current_scene = MENU;
 			sceneMenu.init();
 		}
-		if (key == 82) { //R code
+		if (key == 114) { //R code
 			if (current_level == 1) {
 				current_scene = LEVEL1;
 				engine->drop();
